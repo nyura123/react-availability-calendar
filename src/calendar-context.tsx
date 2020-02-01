@@ -1,16 +1,18 @@
-import React, { useContext, useMemo } from "react";
-import { createUtils } from "./utils";
-import { CalendarTheme, defaultTheme } from "./types";
-import { MomentCtrFunc, momentSubsetStub } from "./moment-types/moment-subset";
+import React, { useContext, useMemo } from 'react';
+import { createUtils } from './utils';
+import { CalendarTheme, defaultTheme } from './types';
+import { MomentCtrFunc, momentSubsetStub } from './moment-types/moment-subset';
 
-export const CalendarContext = React.createContext<{
+export interface CalendarContextValue {
   moment: MomentCtrFunc;
   utils: ReturnType<typeof createUtils>;
   theme: CalendarTheme;
-}>({
+}
+
+export const CalendarContext = React.createContext<CalendarContextValue>({
   moment: () => momentSubsetStub,
   utils: createUtils(() => momentSubsetStub),
-  theme: defaultTheme
+  theme: defaultTheme,
 });
 
 export const useCalendarContext = () => useContext(CalendarContext);
@@ -23,7 +25,7 @@ export const CalendarContextProvider = ({ moment, theme, children }: any) => {
       value={{
         moment,
         utils,
-        theme
+        theme,
       }}
     >
       {children}

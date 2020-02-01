@@ -16,6 +16,7 @@ import {
   useCalendarContext,
   CalendarContextProvider,
 } from './calendar-context';
+import { Overrides } from 'overrides';
 
 const AvailabilityCalendarComp = ({
   initialDate,
@@ -26,10 +27,10 @@ const AvailabilityCalendarComp = ({
   onCalRangeChange,
   slotLengthMs,
   slotStepMs,
-  renderAvailSlots,
-  renderDayCell,
-  renderDayCells,
-}: Omit<Omit<AvailabilityCalendarProps, 'moment'>, 'theme'>) => {
+  overrides,
+}: Omit<Omit<AvailabilityCalendarProps, 'moment'>, 'theme'> & {
+  overrides?: Overrides;
+}) => {
   const { moment, utils } = useCalendarContext();
 
   // const classes = useStyles();
@@ -102,6 +103,7 @@ const AvailabilityCalendarComp = ({
         localizer={{
           messages: { today: 'Today', previous: 'Previous', next: 'Next' },
         }}
+        overrides={overrides}
       />
       <MonthlyAvailabilityCalendar
         availabilities={availabilities}
@@ -109,9 +111,7 @@ const AvailabilityCalendarComp = ({
         onAvailabilitySelected={onAvailabilitySelected}
         slotLengthMs={slotLengthMs}
         slotStepMs={slotStepMs}
-        renderAvailSlots={renderAvailSlots}
-        renderDayCell={renderDayCell}
-        renderDayCells={renderDayCells}
+        overrides={overrides}
       />
     </div>
   );
@@ -121,7 +121,7 @@ export const AvailabilityCalendar = ({
   moment,
   theme,
   ...props
-}: AvailabilityCalendarProps) => {
+}: AvailabilityCalendarProps & { overdides?: Overrides }) => {
   return (
     <CalendarContextProvider
       moment={moment}

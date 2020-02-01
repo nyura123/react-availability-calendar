@@ -90,6 +90,11 @@ export interface ToolBarProps {
   localizer: { messages: { [key: string]: string } };
 }
 
+export interface ToolBarButtonProps {
+  message: string;
+  onClicked: () => void;
+}
+
 type stringOrDate = string | Date;
 
 export type Range = Date[] | { start: stringOrDate; end: stringOrDate };
@@ -105,10 +110,6 @@ export interface AvailabilityCalendarProps {
   blockOutPeriods?: MsSinceMidnightRange[];
   slotLengthMs?: number;
   slotStepMs?: number;
-
-  renderDayCell?: (p: RenderDayCellProps) => JSX.Element | null;
-  renderDayCells?: (p: RenderDayCellsProps) => JSX.Element | null;
-  renderAvailSlots?: (p: RenderAvailProps) => JSX.Element | null;
 }
 
 export interface MonthlyAvailabilityCalendarProps {
@@ -118,10 +119,6 @@ export interface MonthlyAvailabilityCalendarProps {
   onAvailabilitySelected: (e: AvailabilityEvent) => any;
   slotLengthMs?: number;
   slotStepMs?: number;
-
-  renderDayCell?: (p: RenderDayCellProps) => JSX.Element | null;
-  renderDayCells?: (p: RenderDayCellsProps) => JSX.Element | null;
-  renderAvailSlots?: (p: RenderAvailProps) => JSX.Element | null;
 }
 
 export interface RenderDayCellProps {
@@ -145,8 +142,6 @@ export interface RenderDayCellsProps {
     hasAvail: boolean;
   }[];
 
-  renderDayCell?: (p: RenderDayCellProps) => JSX.Element | null;
-
   moment: MomentCtrFunc;
   utils: ReturnType<typeof createUtils>;
   theme: CalendarTheme;
@@ -162,6 +157,14 @@ export interface RenderAvailProps {
 
   utils: ReturnType<typeof createUtils>;
   theme: CalendarTheme;
+}
+
+export interface RenderAvailSlot {
+  i: number;
+  theme: CalendarTheme;
+  onAvailabilitySelected: (e: AvailabilityEvent) => any;
+  s: AvailabilityEvent;
+  formatAsDateJustTime: (date: Date) => string;
 }
 
 export interface HasAvail {

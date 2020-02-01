@@ -1,11 +1,12 @@
 import React, { useState, useMemo, useEffect } from 'react';
 
-import { renderWeekdays } from './render-weekdays';
+import { RenderWeekdays } from './render-weekdays';
 import { MonthlyAvailabilityCalendarProps } from './types';
 
 import { RenderAvailSlots } from './render-avail-slots';
 import { RenderDayCells } from './render-day-cells';
 import { useCalendarContext } from './calendar-context';
+import { Overrides } from 'overrides';
 
 export const MonthlyAvailabilityCalendar = ({
   availabilities,
@@ -14,13 +15,8 @@ export const MonthlyAvailabilityCalendar = ({
   slotStepMs,
   date,
   style,
-  renderAvailSlots,
-  renderDayCells,
-  renderDayCell,
-}: MonthlyAvailabilityCalendarProps) => {
-  renderAvailSlots = renderAvailSlots || RenderAvailSlots;
-  renderDayCells = renderDayCells || RenderDayCells;
-
+  overrides,
+}: MonthlyAvailabilityCalendarProps & { overrides?: Overrides }) => {
   const { moment, theme, utils } = useCalendarContext();
 
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
@@ -64,7 +60,7 @@ export const MonthlyAvailabilityCalendar = ({
   return (
     <div style={{ minHeight: 368, ...style }}>
       {/* render weekdays header */}
-      {renderWeekdays()}
+      <RenderWeekdays overrides={overrides} />
 
       {/* render each week in cal range */}
       {weeks.map((w, i) => {
@@ -80,20 +76,21 @@ export const MonthlyAvailabilityCalendar = ({
         );
         return hideWeek ? null : (
           <React.Fragment key={'w_' + i}>
-            {renderDayCells &&
-              renderDayCells({
+            <RenderDayCells
+              {...{
                 week: w,
                 selectedDate,
                 weekIndexInCalRange: i,
                 handleSelected,
                 availsByIndex,
-                renderDayCell,
                 moment,
                 utils,
                 theme,
-              })}
-            {renderAvailSlots &&
-              renderAvailSlots({
+                overrides,
+              }}
+            />
+            <RenderAvailSlots
+              {...{
                 show: showWeek,
                 onAvailabilitySelected,
                 viewingDayAvailabilities,
@@ -102,7 +99,9 @@ export const MonthlyAvailabilityCalendar = ({
                 slotStepMs,
                 utils,
                 theme,
-              })}
+                overrides,
+              }}
+            />
           </React.Fragment>
         );
       })}

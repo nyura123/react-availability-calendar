@@ -1,6 +1,7 @@
-import React from "react";
-import { RenderDayCellsProps } from "./types";
-import { RenderDayCell } from "./render-day-cell";
+import React from 'react';
+import { RenderDayCellsProps } from './types';
+import { RenderDayCell } from './render-day-cell';
+import { Overrides, getDayCellsOVerride } from 'overrides';
 
 export function RenderDayCells({
   week,
@@ -8,26 +9,42 @@ export function RenderDayCells({
   weekIndexInCalRange,
   handleSelected,
   availsByIndex,
-  renderDayCell,
   moment,
   utils,
-  theme
-}: RenderDayCellsProps) {
-  renderDayCell = renderDayCell || RenderDayCell;
+  theme,
+  overrides,
+}: RenderDayCellsProps & { overrides?: Overrides }) {
+  const { Root, style } = getDayCellsOVerride(overrides, {
+    style: {
+      display: 'flex',
+      justifyContent: 'flex-start',
+      flexWrap: 'nowrap',
+      flexDirection: 'row',
+    },
+  });
+
+  if (Root) {
+    return (
+      <Root
+        {...{
+          week,
+          selectedDate,
+          weekIndexInCalRange,
+          handleSelected,
+          availsByIndex,
+          moment,
+          utils,
+          theme,
+        }}
+      />
+    );
+  }
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "flex-start",
-        flexWrap: "nowrap",
-        flexDirection: "row"
-      }}
-    >
-      {week.map(
-        (d, j) =>
-          renderDayCell &&
-          renderDayCell({
+    <div style={style}>
+      {week.map((d, j) => (
+        <RenderDayCell
+          {...{
             date: d,
             selectedDate,
             weekIndexInCalRange,
@@ -36,9 +53,11 @@ export function RenderDayCells({
             availsByIndex,
             moment,
             utils,
-            theme
-          })
-      )}
+            theme,
+            overrides,
+          }}
+        />
+      ))}
     </div>
   );
 }

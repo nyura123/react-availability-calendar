@@ -6,8 +6,12 @@ import {
   CalendarTheme,
 } from './types';
 import { createUtils } from './utils';
+import { RenderAvailSlot } from './render-avail-slot';
+import { Overrides, getAvailsOverride } from 'overrides';
 
-export const RenderAvailSlots: React.SFC<RenderAvailProps> = ({
+export const RenderAvailSlots: React.SFC<RenderAvailProps & {
+  overrides?: Overrides;
+}> = ({
   viewingDayAvailabilities,
   handleUnselect,
   onAvailabilitySelected,
@@ -16,13 +20,31 @@ export const RenderAvailSlots: React.SFC<RenderAvailProps> = ({
   slotLengthMs,
   utils,
   theme,
+  overrides,
 }) => {
+  const { Root, style } = getAvailsOverride(overrides, {
+    style: show ? theme.slotsContainerStyleShow : theme.slotsContainerStyleHide,
+  });
+
+  if (Root) {
+    return (
+      <Root
+        {...{
+          viewingDayAvailabilities,
+          handleUnselect,
+          onAvailabilitySelected,
+          show,
+          slotStepMs,
+          slotLengthMs,
+          utils,
+          theme,
+        }}
+      />
+    );
+  }
+
   return (
-    <div
-      style={
-        show ? theme.slotsContainerStyleShow : theme.slotsContainerStyleHide
-      }
-    >
+    <div style={style}>
       {show && (
         <div className="mt-2 mr-1">
           <button
@@ -42,6 +64,7 @@ export const RenderAvailSlots: React.SFC<RenderAvailProps> = ({
             slotLengthMs={slotLengthMs}
             slotStepMs={slotStepMs}
             utils={utils}
+            overrides={overrides}
           />
         </div>
       )}
@@ -57,6 +80,7 @@ export const AddBookingFromAvailabilitySlots = ({
   onAvailabilitySelected,
   theme,
   utils,
+  overrides,
 }: // durationMinutes //duration of the booking to create
 {
   avails: Booking[];
@@ -67,7 +91,7 @@ export const AddBookingFromAvailabilitySlots = ({
   onAvailabilitySelected: (e: AvailabilityEvent) => any;
   utils: ReturnType<typeof createUtils>;
   // onAdded: () => any;
-}) => {
+} & { overrides?: Overrides }) => {
   const { chunkify, msInHour, formatAsDate, formatAsDateJustTime } = utils;
   const slots = useMemo(
     () =>
@@ -88,24 +112,16 @@ export const AddBookingFromAvailabilitySlots = ({
       <h5>
         {avails && avails.length > 0 ? formatAsDate(avails[0].startDate) : ''}
       </h5>
-      {slots.map((s, i) => (
-        <div key={'b_' + i} style={{ marginBottom: 10 }}>
-          <button
-            className={theme.slotButtonClass}
-            disabled={false}
-            // variant="contained"
-            style={{ minWidth: 200 }}
-            onClick={() =>
-              onAvailabilitySelected({
-                startDate: new Date(s.startDate),
-                endDate: new Date(s.endDate),
-              })
-            }
-          >
-            {formatAsDateJustTime(new Date(s.startDate))}
-          </button>
-        </div>
-      ))}
+      {slots.map((s, i) =>
+        RenderAvailSlot({
+          i,
+          theme,
+          onAvailabilitySelected,
+          s,
+          formatAsDateJustTime,
+          overrides,
+        })
+      )}
     </div>
   );
 };

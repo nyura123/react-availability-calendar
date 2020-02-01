@@ -1,17 +1,24 @@
-import React from "react";
+import React from 'react';
+import { Overrides, getWeekdaysOVerride } from 'overrides';
 
-const weekdays = ["S", "M", "T", "W", "Th", "F", "Sa"];
+const weekdays = ['S', 'M', 'T', 'W', 'Th', 'F', 'Sa'];
 
-export const renderWeekdays = () => {
+export const RenderWeekdays = ({ overrides }: { overrides?: Overrides }) => {
+  const { Root, style } = getWeekdaysOVerride(overrides, {
+    style: {
+      display: 'flex',
+      justifyContent: 'flex-start',
+      flexWrap: 'nowrap',
+      flexDirection: 'row',
+    },
+  });
+
+  if (Root) {
+    return <Root />;
+  }
+
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "flex-start",
-        flexWrap: "nowrap",
-        flexDirection: "row"
-      }}
-    >
+    <div style={style}>
       {weekdays.map(weekday => (
         <div
           className="border border-default"
@@ -20,9 +27,9 @@ export const renderWeekdays = () => {
             height: 50,
             width: 50,
             marginBottom: 10,
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center"
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
           }}
         >
           {weekday}
