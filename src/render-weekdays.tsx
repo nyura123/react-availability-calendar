@@ -1,5 +1,5 @@
 import React from 'react';
-import { Overrides, getWeekdaysOVerride } from 'overrides';
+import { Overrides, getWeekdaysOVerride } from './overrides';
 
 const weekdays = ['S', 'M', 'T', 'W', 'Th', 'F', 'Sa'];
 

@@ -16,7 +16,7 @@ import {
   useCalendarContext,
   CalendarContextProvider,
 } from './calendar-context';
-import { Overrides } from 'overrides';
+import { Overrides } from './overrides';
 
 const AvailabilityCalendarComp = ({
   initialDate,
@@ -121,7 +121,7 @@ export const AvailabilityCalendar = ({
   moment,
   theme,
   ...props
-}: AvailabilityCalendarProps & { overdides?: Overrides }) => {
+}: AvailabilityCalendarProps & { overrides?: Overrides }) => {
   return (
     <CalendarContextProvider
       moment={moment}

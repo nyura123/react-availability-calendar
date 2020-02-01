@@ -1,7 +1,7 @@
 import React from 'react';
 import { RenderDayCellsProps } from './types';
 import { RenderDayCell } from './render-day-cell';
-import { Overrides, getDayCellsOVerride } from 'overrides';
+import { Overrides, getDayCellsOVerride } from './overrides';
 
 export function RenderDayCells({
   week,

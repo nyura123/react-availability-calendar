@@ -1,6 +1,6 @@
 import React from 'react';
 import { RenderAvailSlot } from './types';
-import { Overrides, getAvailOverride } from 'overrides';
+import { Overrides, getAvailOverride } from './overrides';
 
 export function RenderAvailSlot({
   i,

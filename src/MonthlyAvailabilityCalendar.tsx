@@ -6,7 +6,7 @@ import { MonthlyAvailabilityCalendarProps } from './types';
 import { RenderAvailSlots } from './render-avail-slots';
 import { RenderDayCells } from './render-day-cells';
 import { useCalendarContext } from './calendar-context';
-import { Overrides } from 'overrides';
+import { Overrides } from './overrides';
 
 export const MonthlyAvailabilityCalendar = ({
   availabilities,

@@ -1,6 +1,6 @@
 import React from 'react';
 import { RenderDayCellProps } from './types';
-import { Overrides, getDayCellOVerride } from 'overrides';
+import { Overrides, getDayCellOVerride } from './overrides';
 
 export const RenderDayCell = ({
   date,

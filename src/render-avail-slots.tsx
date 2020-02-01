@@ -7,7 +7,7 @@ import {
 } from './types';
 import { createUtils } from './utils';
 import { RenderAvailSlot } from './render-avail-slot';
-import { Overrides, getAvailsOverride } from 'overrides';
+import { Overrides, getAvailsOverride } from './overrides';
 
 export const RenderAvailSlots: React.SFC<RenderAvailProps & {
   overrides?: Overrides;

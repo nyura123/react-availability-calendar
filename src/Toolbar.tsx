@@ -5,7 +5,7 @@ import {
   Overrides,
   getToolBarOverride,
   getToolBarButtonOverride,
-} from 'overrides';
+} from './overrides';
 
 const navigate: Navigate = {
   PREVIOUS: 'PREV',
@@ -38,21 +38,21 @@ export const Toolbar = ({
           theme={theme}
           overrides={overrides}
           onClick={() => onNavigate(navigate.TODAY)}
-          message={messages.TODAY}
+          message={messages.today}
         />
 
         <ToolbarButton
           theme={theme}
           overrides={overrides}
           onClick={() => onNavigate(navigate.PREVIOUS)}
-          message={messages.PREVIOUS}
+          message={messages.previous}
         />
 
         <ToolbarButton
           theme={theme}
           overrides={overrides}
           onClick={() => onNavigate(navigate.NEXT)}
-          message={messages.NEXT}
+          message={messages.next}
         />
 
         <button

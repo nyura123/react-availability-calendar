@@ -24,10 +24,6 @@ export interface AvailabilityCalendarProps {
   blockOutPeriods?: MsSinceMidnightRange[];
   slotLengthMs?: number;
   slotStepMs?: number;
-
-  renderDayCell?: (p: RenderDayCellProps) => JSX.Element | null;
-  renderDayCells?: (p: RenderDayCellsProps) => JSX.Element | null;
-  renderAvailSlots?: (p: RenderAvailProps) => JSX.Element | null;
 }
 ```
 

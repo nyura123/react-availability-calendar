@@ -6,7 +6,7 @@ import {
   MsSinceMidnightRange,
   Booking,
   Range,
-  CalendarThemeProp,
+  defaultComponents,
 } from 'react-availability-calendar';
 import moment from 'moment';
 
@@ -52,6 +52,10 @@ const App: React.FC = () => {
         onAvailabilitySelected={onAvailabilitySelected}
         onCalRangeChange={onChangedCalRange}
         blockOutPeriods={blockOutPeriods}
+        // overrides={{
+        //   ...defaultComponents,
+        //   ToolBar: { Root: (p: any) => <div>{JSON.stringify(p)}</div> },
+        // }}
       />
     </div>
   );
