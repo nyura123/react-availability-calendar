@@ -42,14 +42,22 @@ export interface AvailabilityCalendarProps {
 ### Usage:
 
 ```js
+import React from 'react';
+
 import {
   AvailabilityCalendar,
   AvailabilityEvent,
   MsSinceMidnightRange,
   Booking,
   Range,
+  CalendarThemeProp,
 } from 'react-availability-calendar';
 import moment from 'moment';
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './custom.scss';
+
+const msInHour = 60 * 60 * 1000;
 
 const App: React.FC = () => {
   const now = new Date();
@@ -67,19 +75,19 @@ const App: React.FC = () => {
 
   const bookings: Booking[] = [
     {
-      startDate: new Date(2020, 1, 1, 13),
-      endDate: new Date(2020, 1, 1, 14),
+      startDate: new Date(2020, 2, 1, 19),
+      endDate: new Date(2020, 2, 1, 20),
     },
     {
-      startDate: new Date(2020, 1, 1, 10, 30),
-      endDate: new Date(2020, 1, 1, 11),
+      startDate: new Date(2020, 2, 1, 16, 30),
+      endDate: new Date(2020, 2, 1, 17),
     },
   ];
 
   const providerTimeZone = 'America/New_York';
 
   return (
-    <div>
+    <div style={{ width: 350 }}>
       <AvailabilityCalendar
         bookings={bookings}
         providerTimeZone={providerTimeZone}
@@ -92,6 +100,8 @@ const App: React.FC = () => {
     </div>
   );
 };
+
+export default App;
 ```
 
 ### Examples
