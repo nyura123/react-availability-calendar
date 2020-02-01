@@ -31,6 +31,10 @@ export interface AvailabilityCalendarProps {
 }
 ```
 
+### Customize "Request Appointment" label:
+
+pass `theme={{requestAppointmentLabel: "Request Booking or other wording"}}`
+
 ### Installation:
 
 `npm install react-availability-calendar --save`

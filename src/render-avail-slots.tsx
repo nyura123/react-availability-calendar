@@ -84,7 +84,7 @@ export const AddBookingFromAvailabilitySlots = ({
 
   return (
     <div>
-      <h4>Request Appointment</h4>
+      <h4>{theme.requestAppointmentLabel}</h4>
       <h5>
         {avails && avails.length > 0 ? formatAsDate(avails[0].startDate) : ''}
       </h5>

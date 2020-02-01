@@ -17,6 +17,8 @@ export interface CalendarTheme {
   toolBarButtonsContainerClass: string;
   toolBarButtonClass: string;
   toolBarLabelClass: string;
+
+  requestAppointmentLabel: string;
 }
 
 export interface CalendarThemeProp {
@@ -34,6 +36,8 @@ export interface CalendarThemeProp {
   toolBarButtonsContainerClass?: string;
   toolBarButtonClass?: string;
   toolBarLabelClass?: string;
+
+  requestAppointmentLabel?: string;
 }
 
 export const defaultTheme: CalendarTheme = {
@@ -61,6 +65,8 @@ export const defaultTheme: CalendarTheme = {
   toolBarButtonsContainerClass: 'border btn-group w-100',
   toolBarButtonClass: 'btn',
   toolBarLabelClass: 'btn btn-link',
+
+  requestAppointmentLabel: 'Request Appointment',
 };
 
 export interface AvailabilityEvent {
