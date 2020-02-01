@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "da7658e5aa9a29195c56a3c102105608",
+    "revision": "07f16427e57a3218ddd23167549a11de",
     "url": "/react-availability-calendar/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/react-availability-calendar/static/css/2.47e06e2e.chunk.css"
   },
   {
-    "revision": "61b29241c0f776366957",
+    "revision": "0340a49df322a9a6a721",
     "url": "/react-availability-calendar/static/css/main.8f60a51b.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/react-availability-calendar/static/js/2.b8469cc1.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "61b29241c0f776366957",
-    "url": "/react-availability-calendar/static/js/main.aa869952.chunk.js"
+    "revision": "0340a49df322a9a6a721",
+    "url": "/react-availability-calendar/static/js/main.7cd73ffa.chunk.js"
   },
   {
     "revision": "19dc1c36e5deee8dc94c",

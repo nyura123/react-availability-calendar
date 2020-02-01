@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/react-availability-calendar/static/css/main.8f60a51b.chunk.css",
-    "main.js": "/react-availability-calendar/static/js/main.aa869952.chunk.js",
-    "main.js.map": "/react-availability-calendar/static/js/main.aa869952.chunk.js.map",
+    "main.js": "/react-availability-calendar/static/js/main.7cd73ffa.chunk.js",
+    "main.js.map": "/react-availability-calendar/static/js/main.7cd73ffa.chunk.js.map",
     "runtime-main.js": "/react-availability-calendar/static/js/runtime-main.23f27cde.js",
     "runtime-main.js.map": "/react-availability-calendar/static/js/runtime-main.23f27cde.js.map",
     "static/css/2.47e06e2e.chunk.css": "/react-availability-calendar/static/css/2.47e06e2e.chunk.css",
     "static/js/2.b8469cc1.chunk.js": "/react-availability-calendar/static/js/2.b8469cc1.chunk.js",
     "static/js/2.b8469cc1.chunk.js.map": "/react-availability-calendar/static/js/2.b8469cc1.chunk.js.map",
     "index.html": "/react-availability-calendar/index.html",
-    "precache-manifest.6b102ce7146d0e0e41403e15e04d0737.js": "/react-availability-calendar/precache-manifest.6b102ce7146d0e0e41403e15e04d0737.js",
+    "precache-manifest.9d4a5d50c7742b6d3d4556892da18e60.js": "/react-availability-calendar/precache-manifest.9d4a5d50c7742b6d3d4556892da18e60.js",
     "service-worker.js": "/react-availability-calendar/service-worker.js",
     "static/css/2.47e06e2e.chunk.css.map": "/react-availability-calendar/static/css/2.47e06e2e.chunk.css.map",
     "static/css/main.8f60a51b.chunk.css.map": "/react-availability-calendar/static/css/main.8f60a51b.chunk.css.map",
@@ -20,6 +20,6 @@
     "static/css/2.47e06e2e.chunk.css",
     "static/js/2.b8469cc1.chunk.js",
     "static/css/main.8f60a51b.chunk.css",
-    "static/js/main.aa869952.chunk.js"
+    "static/js/main.7cd73ffa.chunk.js"
   ]
 }
