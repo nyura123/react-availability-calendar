@@ -1,8 +1,8 @@
 import React from 'react';
-import { RenderDayCellProps } from './types';
+import { DayCellProps } from './types';
 import { Overrides, getDayCellOVerride } from './overrides';
 
-export const RenderDayCell = ({
+export const DayCell = ({
   date,
   dayIndexInWeek,
   weekIndexInCalRange,
@@ -13,7 +13,7 @@ export const RenderDayCell = ({
   utils,
   theme,
   overrides,
-}: RenderDayCellProps & { overrides?: Overrides }) => {
+}: DayCellProps & { overrides?: Overrides }) => {
   const { Root } = getDayCellOVerride(overrides, {});
 
   if (Root) {
@@ -38,7 +38,6 @@ export const RenderDayCell = ({
 
   return (
     <div
-      key={'d_' + dayIndexInWeek}
       className={
         theme.dayClassBase +
         ' ' +

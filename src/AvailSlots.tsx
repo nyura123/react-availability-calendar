@@ -1,15 +1,15 @@
 import React, { useMemo } from 'react';
 import {
-  RenderAvailProps,
+  AvailSlotsProps,
   Booking,
   AvailabilityEvent,
   CalendarTheme,
 } from './types';
 import { createUtils } from './utils';
-import { RenderAvailSlot } from './render-avail-slot';
+import { AvailSlot } from './AvailSlot';
 import { Overrides, getAvailsOverride } from './overrides';
 
-export const RenderAvailSlots: React.SFC<RenderAvailProps & {
+export const AvailSlots: React.SFC<AvailSlotsProps & {
   overrides?: Overrides;
 }> = ({
   viewingDayAvailabilities,
@@ -112,16 +112,19 @@ export const AddBookingFromAvailabilitySlots = ({
       <h5>
         {avails && avails.length > 0 ? formatAsDate(avails[0].startDate) : ''}
       </h5>
-      {slots.map((s, i) =>
-        RenderAvailSlot({
-          i,
-          theme,
-          onAvailabilitySelected,
-          s,
-          formatAsDateJustTime,
-          overrides,
-        })
-      )}
+      {slots.map((s, i) => (
+        <AvailSlot
+          key={'b_' + i}
+          {...{
+            i,
+            theme,
+            onAvailabilitySelected,
+            s,
+            formatAsDateJustTime,
+            overrides,
+          }}
+        />
+      ))}
     </div>
   );
 };

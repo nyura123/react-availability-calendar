@@ -121,7 +121,7 @@ export interface MonthlyAvailabilityCalendarProps {
   slotStepMs?: number;
 }
 
-export interface RenderDayCellProps {
+export interface DayCellProps {
   selectedDate: Date | null;
   date: Date;
   dayIndexInWeek: number;
@@ -133,7 +133,7 @@ export interface RenderDayCellProps {
   theme: CalendarTheme;
 }
 
-export interface RenderDayCellsProps {
+export interface DayCellsProps {
   week: Date[];
   selectedDate: Date | null;
   weekIndexInCalRange: number;
@@ -147,7 +147,7 @@ export interface RenderDayCellsProps {
   theme: CalendarTheme;
 }
 
-export interface RenderAvailProps {
+export interface AvailSlotsProps {
   viewingDayAvailabilities: AvailabilityEvent[];
   handleUnselect: () => any;
   show: boolean;
@@ -159,8 +159,7 @@ export interface RenderAvailProps {
   theme: CalendarTheme;
 }
 
-export interface RenderAvailSlot {
-  i: number;
+export interface AvailSlotProps {
   theme: CalendarTheme;
   onAvailabilitySelected: (e: AvailabilityEvent) => any;
   s: AvailabilityEvent;
@@ -177,10 +176,6 @@ export interface Booking {
   endDate: Date;
   isBlockout?: boolean;
   resourceId?: number;
-}
-
-export interface RenderSlotsProps {
-  avails: AvailabilityEvent[];
 }
 
 export type MsSinceMidnightRange = number[];

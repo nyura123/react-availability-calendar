@@ -3,7 +3,7 @@ import { Overrides, getWeekdaysOVerride } from './overrides';
 
 const weekdays = ['S', 'M', 'T', 'W', 'Th', 'F', 'Sa'];
 
-export const RenderWeekdays = ({ overrides }: { overrides?: Overrides }) => {
+export const Weekdays = ({ overrides }: { overrides?: Overrides }) => {
   const { Root, style } = getWeekdaysOVerride(overrides, {
     style: {
       display: 'flex',

@@ -1,10 +1,10 @@
 import {
-  RenderDayCellProps,
-  RenderDayCellsProps,
+  DayCellProps,
+  DayCellsProps,
   ToolBarProps,
-  RenderAvailProps,
+  AvailSlotsProps,
   ToolBarButtonProps,
-  RenderAvailSlot,
+  AvailSlotProps,
 } from '../types';
 
 type StyleOrFunc<StyleProps> =
@@ -41,25 +41,17 @@ const DefaultToolBarButton: OverridableComponentProps<
 
 const DefaultWeekdays: OverridableComponentProps<{}, {}, {}> = {};
 
-const DefaultDayCells: OverridableComponentProps<
-  RenderDayCellsProps,
-  {},
-  {}
-> = {};
+const DefaultDayCells: OverridableComponentProps<DayCellsProps, {}, {}> = {};
 
-const DefaultDayCell: OverridableComponentProps<
-  RenderDayCellProps,
-  {},
-  {}
-> = {};
+const DefaultDayCell: OverridableComponentProps<DayCellProps, {}, {}> = {};
 
 const DefaultAvailabiliies: OverridableComponentProps<
-  RenderAvailProps,
+  AvailSlotsProps,
   {},
   {}
 > = {};
 
-const DefaultAvailSlot: OverridableComponentProps<RenderAvailSlot, {}, {}> = {};
+const DefaultAvailSlot: OverridableComponentProps<AvailSlotProps, {}, {}> = {};
 
 // type ExtractComponentProps<
 //   Overridable
@@ -236,32 +228,32 @@ export function getWeekdaysOVerride(
 
 export function getDayCellsOVerride(
   overrides: Overrides | undefined,
-  defaultSpec: OverridableComponentProps<RenderDayCellsProps, {}, {}>
-): ResolvedOverride<RenderDayCellsProps, {}> {
+  defaultSpec: OverridableComponentProps<DayCellsProps, {}, {}>
+): ResolvedOverride<DayCellsProps, {}> {
   const o = overrides ? overrides.DayCells : undefined;
   return getOverride(o, defaultSpec, {});
 }
 
 export function getDayCellOVerride(
   overrides: Overrides | undefined,
-  defaultSpec: OverridableComponentProps<RenderDayCellProps, {}, {}>
-): ResolvedOverride<RenderDayCellProps, {}> {
+  defaultSpec: OverridableComponentProps<DayCellProps, {}, {}>
+): ResolvedOverride<DayCellProps, {}> {
   const o = overrides ? overrides.DayCell : undefined;
   return getOverride(o, defaultSpec, {});
 }
 
 export function getAvailsOverride(
   overrides: Overrides | undefined,
-  defaultSpec: OverridableComponentProps<RenderAvailProps, {}, {}>
-): ResolvedOverride<RenderAvailProps, {}> {
+  defaultSpec: OverridableComponentProps<AvailSlotsProps, {}, {}>
+): ResolvedOverride<AvailSlotsProps, {}> {
   const o = overrides ? overrides.Availabilities : undefined;
   return getOverride(o, defaultSpec, {});
 }
 
 export function getAvailOverride(
   overrides: Overrides | undefined,
-  defaultSpec: OverridableComponentProps<RenderAvailSlot, {}, {}>
-): ResolvedOverride<RenderAvailSlot, {}> {
+  defaultSpec: OverridableComponentProps<AvailSlotProps, {}, {}>
+): ResolvedOverride<AvailSlotProps, {}> {
   const o = overrides ? overrides.AvailSlot : undefined;
   return getOverride(o, defaultSpec, {});
 }

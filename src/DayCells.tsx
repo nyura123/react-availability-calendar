@@ -1,9 +1,9 @@
 import React from 'react';
-import { RenderDayCellsProps } from './types';
-import { RenderDayCell } from './render-day-cell';
+import { DayCellsProps } from './types';
+import { DayCell } from './DayCell';
 import { Overrides, getDayCellsOVerride } from './overrides';
 
-export function RenderDayCells({
+export function DayCells({
   week,
   selectedDate,
   weekIndexInCalRange,
@@ -13,7 +13,7 @@ export function RenderDayCells({
   utils,
   theme,
   overrides,
-}: RenderDayCellsProps & { overrides?: Overrides }) {
+}: DayCellsProps & { overrides?: Overrides }) {
   const { Root, style } = getDayCellsOVerride(overrides, {
     style: {
       display: 'flex',
@@ -43,7 +43,8 @@ export function RenderDayCells({
   return (
     <div style={style}>
       {week.map((d, j) => (
-        <RenderDayCell
+        <DayCell
+          key={'d_' + j}
           {...{
             date: d,
             selectedDate,

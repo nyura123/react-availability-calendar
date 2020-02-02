@@ -1,15 +1,14 @@
 import React from 'react';
-import { RenderAvailSlot } from './types';
+import { AvailSlotProps } from './types';
 import { Overrides, getAvailOverride } from './overrides';
 
-export function RenderAvailSlot({
-  i,
+export function AvailSlot({
   theme,
   onAvailabilitySelected,
   s,
   formatAsDateJustTime,
   overrides,
-}: RenderAvailSlot & { overrides?: Overrides }) {
+}: AvailSlotProps & { overrides?: Overrides }) {
   const { Root, style } = getAvailOverride(overrides, {
     style: { marginBottom: 10 },
   });
@@ -18,7 +17,6 @@ export function RenderAvailSlot({
     return (
       <Root
         {...{
-          i,
           theme,
           onAvailabilitySelected,
           s,
@@ -29,7 +27,7 @@ export function RenderAvailSlot({
   }
 
   return (
-    <div key={'b_' + i} style={style}>
+    <div style={style}>
       <button
         className={theme.slotButtonClass}
         disabled={false}

@@ -1,10 +1,10 @@
 import React, { useState, useMemo, useEffect } from 'react';
 
-import { RenderWeekdays } from './render-weekdays';
+import { Weekdays } from './Weekdays';
 import { MonthlyAvailabilityCalendarProps } from './types';
 
-import { RenderAvailSlots } from './render-avail-slots';
-import { RenderDayCells } from './render-day-cells';
+import { AvailSlots } from './AvailSlots';
+import { DayCells } from './DayCells';
 import { useCalendarContext } from './calendar-context';
 import { Overrides } from './overrides';
 
@@ -60,7 +60,7 @@ export const MonthlyAvailabilityCalendar = ({
   return (
     <div style={{ minHeight: 368, ...style }}>
       {/* render weekdays header */}
-      <RenderWeekdays overrides={overrides} />
+      <Weekdays overrides={overrides} />
 
       {/* render each week in cal range */}
       {weeks.map((w, i) => {
@@ -76,7 +76,7 @@ export const MonthlyAvailabilityCalendar = ({
         );
         return hideWeek ? null : (
           <React.Fragment key={'w_' + i}>
-            <RenderDayCells
+            <DayCells
               {...{
                 week: w,
                 selectedDate,
@@ -89,7 +89,7 @@ export const MonthlyAvailabilityCalendar = ({
                 overrides,
               }}
             />
-            <RenderAvailSlots
+            <AvailSlots
               {...{
                 show: showWeek,
                 onAvailabilitySelected,
