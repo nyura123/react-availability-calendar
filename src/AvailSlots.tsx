@@ -74,15 +74,13 @@ export const AvailSlots: React.SFC<AvailSlotsProps & {
 
 export const AddBookingFromAvailabilitySlots = ({
   avails,
-  // onAdded,
   slotLengthMs,
   slotStepMs,
   onAvailabilitySelected,
   theme,
   utils,
   overrides,
-}: // durationMinutes //duration of the booking to create
-{
+}: {
   avails: Booking[];
   theme: CalendarTheme;
   durationMinutes: number;
@@ -90,7 +88,6 @@ export const AddBookingFromAvailabilitySlots = ({
   slotStepMs?: number;
   onAvailabilitySelected: (e: AvailabilityEvent) => any;
   utils: ReturnType<typeof createUtils>;
-  // onAdded: () => any;
 } & { overrides?: Overrides }) => {
   const { chunkify, msInHour, formatAsDate, formatAsDateJustTime } = utils;
   const slots = useMemo(
@@ -116,7 +113,6 @@ export const AddBookingFromAvailabilitySlots = ({
         <AvailSlot
           key={'b_' + i}
           {...{
-            i,
             theme,
             onAvailabilitySelected,
             s,

@@ -33,7 +33,6 @@ const AvailabilityCalendarComp = ({
 }) => {
   const { moment, utils } = useCalendarContext();
 
-  // const classes = useStyles();
   const [now] = useState<Date>(initialDate || new Date());
   const [calRange, setCalRange] = useState<Range>(utils.monthRangeForDate(now));
   const [date, setDate] = useState<Date>(now);
@@ -47,51 +46,37 @@ const AvailabilityCalendarComp = ({
     }
   }, [calRange, onCalRangeChange]);
 
-  const availabilities = useMemo<
-    { startDate: Date; endDate: Date; resourceId: number }[]
-  >(() => {
+  const availabilities = useMemo<{ startDate: Date; endDate: Date }[]>(() => {
     const startAndEnd = utils.toStartAndEnd(calRange);
-    return (
-      // chunkify(
-      utils
-        .availabilitiesFromBookings(
-          blockOutPeriods || [],
-          providerTimeZone,
-          bookings,
-          now,
-          startAndEnd.startDate,
-          startAndEnd.endDate
-        )
-        // ,
-        //   1.5 * 60 * 60 * 1000
-        // )
-        .filter(
-          a =>
-            a.endDate.getTime() - a.startDate.getTime() > 0.5 * 60 * 60 * 1000
-        )
-        .map(interval => ({
-          resourceId: 2,
-          startDate: new Date(interval.startDate),
-          endDate: new Date(interval.endDate),
-        }))
+    return utils.availabilitiesFromBookings(
+      blockOutPeriods || [],
+      providerTimeZone,
+      bookings,
+      now,
+      startAndEnd.startDate,
+      startAndEnd.endDate
     );
   }, [bookings, providerTimeZone, calRange, now, blockOutPeriods, utils]);
 
   const handleOnNavigate = (navigate: NavigateAction) => {
     if (navigate === 'TODAY') {
       const today = new Date();
+
       setDate(today);
       setCalRange(utils.monthRangeForDate(today));
+
       return;
     }
 
-    if (navigate !== 'NEXT' && navigate !== 'PREV') return;
+    if (navigate !== 'NEXT' && navigate !== 'PREV') {
+      return;
+    }
 
     const newDate = moment(date)
       .add(navigate === 'NEXT' ? 1 : -1, 'month')
       .toDate();
-    setDate(newDate);
 
+    setDate(newDate);
     setCalRange(utils.monthRangeForDate(newDate));
   };
 

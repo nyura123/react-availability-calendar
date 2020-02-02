@@ -48,11 +48,19 @@ export function createUtils(moment: MomentCtrFunc) {
   const msInMinute = 1 * 60 * 1000;
   const minuteInHour = 60;
 
-  function rotateRangesByms(ranges: MsSinceMidnightRange[], ms: number) {
+  function rotateMs(ms: number, msOffset: number) {
+    msOffset =
+      msOffset > 0 ? Math.min(msInDay, msOffset) : Math.max(-msInDay, msOffset);
+    ms = Math.min(msInDay, Math.max(0, ms));
+    const rotated = ms - msOffset;
+    return rotated < 0 ? rotated + msInDay : rotated;
+  }
+
+  function rotateRangesByms(ranges: MsSinceMidnightRange[], msOffset: number) {
     // make sure ranges are not overlapping
     const shifted = ranges.map(r => [
-      (r[0] + ms) % msInDay,
-      (r[1] + ms) % msInDay,
+      rotateMs(r[0], msOffset) % msInDay,
+      rotateMs(r[1], msOffset) % msInDay,
     ]);
 
     // if the new "midnight" happens in the middle of a range, break it into 2
@@ -193,9 +201,6 @@ export function createUtils(moment: MomentCtrFunc) {
     periodStart: Date,
     periodEnd: Date
   ) {
-    if (blockOutPeriods.length === 0) {
-      blockOutPeriods = [[msInHour * 23 + 59 * 60 * 1000, msInHour * 24]];
-    }
     const tzOffsetMs = calcOffsetFromProviderTimeZoneMs(provideTimeZone);
     const blockOutPeriodsTz = rotateRangesByms(blockOutPeriods, tzOffsetMs);
     const res = [...bookings];
@@ -214,12 +219,13 @@ export function createUtils(moment: MomentCtrFunc) {
       i <= periodEndRoundedToDayMs;
       i = i + msInDay
     ) {
+      const day = new Date(i);
       for (const period of blockOutPeriodsTz) {
         const hourStart = Math.floor(period[0] / msInHour);
         const hourEnd = Math.floor(period[1] / msInHour);
         const minuteStart = Math.floor(period[0] / msInMinute) % minuteInHour;
         const minuteEnd = Math.floor(period[1] / msInMinute) % minuteInHour;
-        const day = new Date(i);
+
         res.push({
           startDate: new Date(
             day.getFullYear(),
@@ -235,9 +241,20 @@ export function createUtils(moment: MomentCtrFunc) {
             hourEnd,
             minuteEnd
           ),
-          isBlockout: true,
         });
       }
+
+      // Ensure each availability is broken up at EOD and doesn't span days
+      res.push({
+        startDate: new Date(
+          day.getFullYear(),
+          day.getMonth(),
+          day.getDate(),
+          23,
+          59
+        ),
+        endDate: new Date(day.getFullYear(), day.getMonth(), day.getDate(), 24),
+      });
     }
     return res;
   }
