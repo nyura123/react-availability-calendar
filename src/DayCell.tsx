@@ -18,7 +18,6 @@ export const DayCell = ({
 
   const isSelected = !!selectedDate && utils.datesEqual(date, selectedDate);
   const hasAvail = availsByIndex[dayIndexInCalRange].hasAvail;
-  const isToday = false; //TODO
 
   const { Root, style } = getDayCellOverride(
     overrides,
@@ -38,7 +37,7 @@ export const DayCell = ({
         alignItems: 'center',
       },
     },
-    { isSelected, isToday, hasAvail }
+    { isSelected, hasAvail }
   );
 
   if (Root) {

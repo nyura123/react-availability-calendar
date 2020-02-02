@@ -9,7 +9,7 @@ import {
 
 type StyleOrFunc<StyleProps> =
   | CSSProperties
-  | ((p?: StyleProps) => CSSProperties);
+  | ((p: StyleProps) => CSSProperties);
 
 export interface OverridableComponentProps<
   ComponentProps,
@@ -46,7 +46,7 @@ const DefaultDayCells: OverridableComponentProps<DayCellsProps, {}, {}> = {};
 const DefaultDayCell: OverridableComponentProps<
   DayCellProps,
   {},
-  { isSelected: boolean; isToday: boolean; hasAvail: boolean }
+  { isSelected: boolean; hasAvail: boolean }
 > = {};
 
 const DefaultAvailabiliies: OverridableComponentProps<
@@ -168,7 +168,7 @@ function resolveStyle<StyleProps>(
   styleProps?: StyleProps
 ) {
   if (typeof style === 'function') {
-    return styleProps ? style(styleProps) : style();
+    return styleProps ? style(styleProps) : style({} as any);
   }
   return style;
 }

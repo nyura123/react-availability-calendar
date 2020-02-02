@@ -56,7 +56,7 @@ const App: React.FC = () => {
           ...defaultComponents,
           // ToolBar: { Root: (p: any) => <div>{JSON.stringify(p)}</div> },
           DayCell: {
-            style: p => (p && p.isSelected ? { height: 60, width: 60 } : {}),
+            style: p => (p.isSelected ? { height: 60, width: 60 } : {}),
           },
         }}
       />
