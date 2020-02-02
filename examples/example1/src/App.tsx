@@ -55,10 +55,9 @@ const App: React.FC = () => {
         overrides={{
           ...defaultComponents,
           // ToolBar: { Root: (p: any) => <div>{JSON.stringify(p)}</div> },
-          // DayCell: {
-          //   style: (p: any) =>
-          //     p && p.isSelected ? { height: 60, width: 60 } : {},
-          // },
+          DayCell: {
+            style: p => (p && p.isSelected ? { height: 60, width: 60 } : {}),
+          },
         }}
       />
     </div>
