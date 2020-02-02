@@ -43,7 +43,11 @@ const DefaultWeekdays: OverridableComponentProps<{}, {}, {}> = {};
 
 const DefaultDayCells: OverridableComponentProps<DayCellsProps, {}, {}> = {};
 
-const DefaultDayCell: OverridableComponentProps<DayCellProps, {}, {}> = {};
+const DefaultDayCell: OverridableComponentProps<
+  DayCellProps,
+  {},
+  { isSelected: boolean; isToday: boolean; hasAvail: boolean }
+> = {};
 
 const DefaultAvailabiliies: OverridableComponentProps<
   AvailSlotsProps,
@@ -63,11 +67,11 @@ const DefaultAvailSlot: OverridableComponentProps<AvailSlotProps, {}, {}> = {};
 // > = Overridable extends OverridableComponentProps<infer _T, infer U, infer _Z>
 //   ? U
 //   : never;
-// type ExtractStyleProps<
-//   Overridable
-// > = Overridable extends OverridableComponentProps<infer _T, infer _U, infer Z>
-//   ? Z
-//   : never;
+type ExtractStyleProps<
+  Overridable
+> = Overridable extends OverridableComponentProps<infer _T, infer _U, infer Z>
+  ? Z
+  : never;
 
 export const defaultComponents = {
   ToolBar: DefaultToolBar,
@@ -204,7 +208,7 @@ export function getOverride<
 
 export function getToolBarOverride(
   overrides: Overrides | undefined,
-  defaultSpec: OverridableComponentProps<ToolBarProps, {}, {}>
+  defaultSpec: typeof DefaultToolBar
 ): ResolvedOverride<ToolBarProps, {}> {
   const o = overrides ? overrides.ToolBar : undefined;
   return getOverride(o, defaultSpec, {});
@@ -212,7 +216,7 @@ export function getToolBarOverride(
 
 export function getToolBarButtonOverride(
   overrides: Overrides | undefined,
-  defaultSpec: OverridableComponentProps<ToolBarButtonProps, {}, {}>
+  defaultSpec: typeof DefaultToolBarButton
 ): ResolvedOverride<ToolBarButtonProps, {}> {
   const o = overrides ? overrides.ToolBarButton : undefined;
   return getOverride(o, defaultSpec, {});
@@ -220,31 +224,32 @@ export function getToolBarButtonOverride(
 
 export function getWeekdaysOVerride(
   overrides: Overrides | undefined,
-  defaultSpec: OverridableComponentProps<{}, {}, {}>
+  defaultSpec: typeof DefaultWeekdays
 ): ResolvedOverride<{}, {}> {
   const o = overrides ? overrides.Weekdays : undefined;
   return getOverride(o, defaultSpec, {});
 }
 
-export function getDayCellsOVerride(
+export function getDayCellsOverride(
   overrides: Overrides | undefined,
-  defaultSpec: OverridableComponentProps<DayCellsProps, {}, {}>
+  defaultSpec: typeof DefaultDayCells
 ): ResolvedOverride<DayCellsProps, {}> {
   const o = overrides ? overrides.DayCells : undefined;
   return getOverride(o, defaultSpec, {});
 }
 
-export function getDayCellOVerride(
+export function getDayCellOverride(
   overrides: Overrides | undefined,
-  defaultSpec: OverridableComponentProps<DayCellProps, {}, {}>
+  defaultSpec: typeof DefaultDayCell,
+  styleProps?: ExtractStyleProps<typeof DefaultDayCell>
 ): ResolvedOverride<DayCellProps, {}> {
   const o = overrides ? overrides.DayCell : undefined;
-  return getOverride(o, defaultSpec, {});
+  return getOverride(o, defaultSpec, styleProps);
 }
 
 export function getAvailsOverride(
   overrides: Overrides | undefined,
-  defaultSpec: OverridableComponentProps<AvailSlotsProps, {}, {}>
+  defaultSpec: typeof DefaultAvailabiliies
 ): ResolvedOverride<AvailSlotsProps, {}> {
   const o = overrides ? overrides.Availabilities : undefined;
   return getOverride(o, defaultSpec, {});
@@ -252,7 +257,7 @@ export function getAvailsOverride(
 
 export function getAvailOverride(
   overrides: Overrides | undefined,
-  defaultSpec: OverridableComponentProps<AvailSlotProps, {}, {}>
+  defaultSpec: typeof DefaultAvailSlot
 ): ResolvedOverride<AvailSlotProps, {}> {
   const o = overrides ? overrides.AvailSlot : undefined;
   return getOverride(o, defaultSpec, {});

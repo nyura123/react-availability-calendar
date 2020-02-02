@@ -52,10 +52,14 @@ const App: React.FC = () => {
         onAvailabilitySelected={onAvailabilitySelected}
         onCalRangeChange={onChangedCalRange}
         blockOutPeriods={blockOutPeriods}
-        // overrides={{
-        //   ...defaultComponents,
-        //   ToolBar: { Root: (p: any) => <div>{JSON.stringify(p)}</div> },
-        // }}
+        overrides={{
+          ...defaultComponents,
+          // ToolBar: { Root: (p: any) => <div>{JSON.stringify(p)}</div> },
+          // DayCell: {
+          //   style: (p: any) =>
+          //     p && p.isSelected ? { height: 60, width: 60 } : {},
+          // },
+        }}
       />
     </div>
   );

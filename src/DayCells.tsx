@@ -1,7 +1,7 @@
 import React from 'react';
 import { DayCellsProps } from './types';
 import { DayCell } from './DayCell';
-import { Overrides, getDayCellsOVerride } from './overrides';
+import { Overrides, getDayCellsOverride } from './overrides';
 
 export function DayCells({
   week,
@@ -14,7 +14,7 @@ export function DayCells({
   theme,
   overrides,
 }: DayCellsProps & { overrides?: Overrides }) {
-  const { Root, style } = getDayCellsOVerride(overrides, {
+  const { Root, style } = getDayCellsOverride(overrides, {
     style: {
       display: 'flex',
       justifyContent: 'flex-start',

@@ -1,6 +1,6 @@
 import React from 'react';
 import { DayCellProps } from './types';
-import { Overrides, getDayCellOVerride } from './overrides';
+import { Overrides, getDayCellOverride } from './overrides';
 
 export const DayCell = ({
   date,
@@ -14,7 +14,32 @@ export const DayCell = ({
   theme,
   overrides,
 }: DayCellProps & { overrides?: Overrides }) => {
-  const { Root } = getDayCellOVerride(overrides, {});
+  const dayIndexInCalRange = weekIndexInCalRange * 7 + dayIndexInWeek;
+
+  const isSelected = !!selectedDate && utils.datesEqual(date, selectedDate);
+  const hasAvail = availsByIndex[dayIndexInCalRange].hasAvail;
+  const isToday = false; //TODO
+
+  const { Root, style } = getDayCellOverride(
+    overrides,
+    {
+      style: {
+        cursor: 'pointer',
+        border:
+          selectedDate && utils.datesEqual(date, selectedDate)
+            ? '4px solid'
+            : availsByIndex[dayIndexInCalRange].hasAvail
+            ? '3px solid'
+            : '',
+        height: 50,
+        width: 50,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+    },
+    { isSelected, isToday, hasAvail }
+  );
 
   if (Root) {
     return (
@@ -34,8 +59,6 @@ export const DayCell = ({
     );
   }
 
-  const dayIndexInCalRange = weekIndexInCalRange * 7 + dayIndexInWeek;
-
   return (
     <div
       className={
@@ -47,20 +70,7 @@ export const DayCell = ({
           ? theme.dayClassHasAvailability
           : theme.dayClassDefault)
       }
-      style={{
-        cursor: 'pointer',
-        border:
-          selectedDate && utils.datesEqual(date, selectedDate)
-            ? '4px solid'
-            : availsByIndex[dayIndexInCalRange].hasAvail
-            ? '3px solid'
-            : '',
-        height: 50,
-        width: 50,
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
+      style={style}
       onClick={() => handleSelected(date)}
     >
       {moment(date).format('D')}
