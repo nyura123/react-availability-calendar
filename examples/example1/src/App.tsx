@@ -12,6 +12,7 @@ import moment from 'moment';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './custom.scss';
+import { Overrides } from 'react-availability-calendar/dist/overrides';
 
 const msInHour = 60 * 60 * 1000;
 
@@ -42,7 +43,7 @@ const App: React.FC = () => {
   ];
 
   // Optional overrides to tweak appearance of various components
-  const overrides = useMemo(
+  const overrides = useMemo<Overrides>(
     () => ({
       ...defaultComponents,
       // ToolBar: { Root: (p: any) => <div>{JSON.stringify(p)}</div> },
@@ -55,11 +56,11 @@ const App: React.FC = () => {
         style: { outline: 'none' },
       },
       DayCell: {
-        style: (p: { isSelected: any }) =>
+        style: p =>
           p.isSelected
             ? { transition: 'width 200ms, height 200ms', height: 60, width: 60 }
             : { transition: 'width 200ms, height 200ms' },
-        className: (p: { isSelected: any; hasAvail: any }) =>
+        className: p =>
           p.isSelected
             ? 'rounded-circle border-success'
             : p.hasAvail

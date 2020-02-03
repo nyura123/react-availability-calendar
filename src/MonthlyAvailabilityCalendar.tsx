@@ -64,11 +64,6 @@ export const MonthlyAvailabilityCalendar = ({
 
       {/* render each week in cal range */}
       {weeks.map((w, i) => {
-        const showWeek = utils.shouldShowWeek(
-          selectedDate,
-          w,
-          viewingDayAvailabilities
-        );
         const hideWeek = utils.shouldHideWeek(
           selectedDate,
           w,
@@ -89,22 +84,23 @@ export const MonthlyAvailabilityCalendar = ({
                 overrides,
               }}
             />
-            <AvailSlots
-              {...{
-                show: showWeek,
-                onAvailabilitySelected,
-                viewingDayAvailabilities,
-                handleUnselect,
-                slotLengthMs,
-                slotStepMs,
-                utils,
-                theme,
-                overrides,
-              }}
-            />
           </React.Fragment>
         );
       })}
+
+      <AvailSlots
+        {...{
+          show: !!selectedDate && viewingDayAvailabilities.length > 0,
+          onAvailabilitySelected,
+          viewingDayAvailabilities,
+          handleUnselect,
+          slotLengthMs,
+          slotStepMs,
+          utils,
+          theme,
+          overrides,
+        }}
+      />
     </div>
   );
 };

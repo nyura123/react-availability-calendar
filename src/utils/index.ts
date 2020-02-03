@@ -170,18 +170,6 @@ export function createUtils(moment: MomentCtrFunc) {
     return { weeks, days };
   }
 
-  function shouldShowWeek(
-    selectedDate: Date | null,
-    week: Date[],
-    viewingDayAvailabilities: AvailabilityEvent[]
-  ) {
-    return (
-      !!selectedDate &&
-      sameWeek(selectedDate, week[0]) &&
-      viewingDayAvailabilities.length > 0
-    );
-  }
-
   function shouldHideWeek(
     selectedDate: Date | null,
     week: Date[],
@@ -357,7 +345,6 @@ export function createUtils(moment: MomentCtrFunc) {
     formatAsDateJustTime,
     formatAsDate,
     shouldHideWeek,
-    shouldShowWeek,
     availByIndex,
     addBlockOutBookings,
     availabilitiesFromBookings,
