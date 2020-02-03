@@ -32,37 +32,35 @@ export const Toolbar = ({
   }
 
   return (
-    <div style={style}>
-      <div className={className} role="group">
-        <ToolbarButton
-          theme={theme}
-          overrides={overrides}
-          onClick={() => onNavigate(navigate.TODAY)}
-          message={messages.today}
-        />
+    <div style={style} className={className} role="group">
+      <ToolbarButton
+        theme={theme}
+        overrides={overrides}
+        onClick={() => onNavigate(navigate.TODAY)}
+        message={messages.today}
+      />
 
-        <ToolbarButton
-          theme={theme}
-          overrides={overrides}
-          onClick={() => onNavigate(navigate.PREVIOUS)}
-          message={messages.previous}
-        />
+      <ToolbarButton
+        theme={theme}
+        overrides={overrides}
+        onClick={() => onNavigate(navigate.PREVIOUS)}
+        message={messages.previous}
+      />
 
-        <ToolbarButton
-          theme={theme}
-          overrides={overrides}
-          onClick={() => onNavigate(navigate.NEXT)}
-          message={messages.next}
-        />
+      <ToolbarButton
+        theme={theme}
+        overrides={overrides}
+        onClick={() => onNavigate(navigate.NEXT)}
+        message={messages.next}
+      />
 
-        <button
-          disabled
-          className={theme.toolBarLabelClass}
-          style={{ width: 110 }}
-        >
-          <span>{label}</span>
-        </button>
-      </div>
+      <button
+        disabled
+        className={theme.toolBarLabelClass}
+        style={{ width: 110 }}
+      >
+        <span>{label}</span>
+      </button>
     </div>
   );
 };
@@ -75,7 +73,7 @@ function ToolbarButton({
 }: { theme: CalendarTheme; message: string; onClick: () => void } & {
   overrides?: Overrides;
 }) {
-  const { Root, internalProps, className } = getToolBarButtonOverride(
+  const { Root, style, internalProps, className } = getToolBarButtonOverride(
     overrides,
     {
       className: theme.toolBarButtonClass,
@@ -87,7 +85,12 @@ function ToolbarButton({
   }
 
   return (
-    <button className={className} onClick={onClick} {...internalProps}>
+    <button
+      className={className}
+      onClick={onClick}
+      style={style}
+      {...internalProps}
+    >
       {message}
     </button>
   );

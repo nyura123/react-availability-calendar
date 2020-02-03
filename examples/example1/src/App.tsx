@@ -24,6 +24,7 @@ const App: React.FC = () => {
   const onChangedCalRange = (r: Range) =>
     console.log('Calendar range selected (fetch bookings here): ', r);
 
+  const providerTimeZoneForBlockOutHours = 'America/New_York';
   const blockOutPeriods: MsSinceMidnightRange[] = [
     [0 * msInHour, 9 * msInHour],
     [19 * msInHour, 24 * msInHour],
@@ -40,20 +41,29 @@ const App: React.FC = () => {
     },
   ];
 
-  const providerTimeZone = 'America/New_York';
-
+  // Optional overrides to tweak appearance of various components
   const overrides = useMemo(
     () => ({
       ...defaultComponents,
       // ToolBar: { Root: (p: any) => <div>{JSON.stringify(p)}</div> },
+      ToolBar: {
+        className: 'border btn-group',
+        style: { minHeight: undefined },
+      },
+      ToolBarButton: {
+        className: 'btn btn-outline-info',
+        style: { outline: 'none' },
+      },
       DayCell: {
-        style: (p: any) =>
+        style: (p: { isSelected: any }) =>
           p.isSelected
             ? { transition: 'width 200ms, height 200ms', height: 60, width: 60 }
             : { transition: 'width 200ms, height 200ms' },
-        className: (p: any) =>
+        className: (p: { isSelected: any; hasAvail: any }) =>
           p.isSelected
             ? 'rounded-circle border-success'
+            : p.hasAvail
+            ? 'rounded-circle border-primary'
             : 'rounded-circle border-secondary',
       },
     }),
@@ -64,7 +74,7 @@ const App: React.FC = () => {
     <div style={{ width: 350 }}>
       <AvailabilityCalendar
         bookings={bookings}
-        providerTimeZone={providerTimeZone}
+        providerTimeZone={providerTimeZoneForBlockOutHours}
         moment={moment}
         initialDate={now}
         onAvailabilitySelected={onAvailabilitySelected}
