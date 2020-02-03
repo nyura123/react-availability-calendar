@@ -55,6 +55,16 @@ const App: React.FC = () => {
         className: 'btn btn-outline-info',
         style: { outline: 'none' },
       },
+      Weekday: {
+        style: {
+          borderWidth: 0,
+          borderStyle: 'solid',
+          borderBottomWidth: 1,
+          borderRightWidth: 1,
+          borderColor: '#dddddd',
+        },
+        className: 'none',
+      },
       DayCell: {
         style: p =>
           p.isSelected
