@@ -6,30 +6,11 @@ import {
   ToolBarButtonProps,
   AvailSlotProps,
 } from '../types';
-
-type StyleOrFunc<StyleProps> =
-  | CSSProperties
-  | ((p: StyleProps) => CSSProperties);
-
-export interface OverridableComponentProps<
-  ComponentProps,
-  InternalProps,
-  StyleProps
-> {
-  style?: StyleOrFunc<StyleProps>;
-  className?: string;
-  Root?: React.ElementType<ComponentProps>;
-  internalProps?: InternalProps;
-}
-
-export interface ResolvedOverride<ComponentProps, InternalProps> {
-  style?: CSSProperties;
-  className?: string;
-  Root?: React.ElementType<ComponentProps>;
-  internalProps?: InternalProps;
-}
-
-import { CSSProperties } from 'react';
+import {
+  OverridableComponentProps,
+  ResolvedOverride,
+  getOverride,
+} from './general';
 
 const DefaultToolBar: OverridableComponentProps<ToolBarProps, {}, {}> = {};
 
@@ -162,49 +143,6 @@ export type Overrides = typeof defaultComponents;
 //     internalProps: { ...defaultSpec.internalProps, ...o.internalProps },
 //   };
 // }
-
-function resolveStyle<StyleProps>(
-  style?: StyleOrFunc<StyleProps>,
-  styleProps?: StyleProps
-) {
-  if (typeof style === 'function') {
-    return styleProps ? style(styleProps) : style({} as any);
-  }
-  return style;
-}
-
-export function getOverride<
-  O extends OverridableComponentProps<T, U, K>,
-  T,
-  U,
-  K
->(
-  o: O | undefined,
-  defaultSpec: O,
-  styleProps?: K,
-  _t?: T,
-  _u?: U,
-  _k?: K
-): ResolvedOverride<T, U> {
-  if (o === undefined) {
-    return {
-      Root: defaultSpec.Root,
-      className: defaultSpec.className,
-      style: { ...resolveStyle(defaultSpec.style, styleProps) },
-      internalProps: defaultSpec.internalProps,
-    };
-  }
-
-  return {
-    Root: defaultSpec.Root || o.Root,
-    className: defaultSpec.className || o.className,
-    style: {
-      ...resolveStyle(defaultSpec.style, styleProps),
-      ...resolveStyle(o.style, styleProps),
-    },
-    internalProps: { ...defaultSpec.internalProps, ...o.internalProps } as U,
-  };
-}
 
 export function getToolBarOverride(
   overrides: Overrides | undefined,

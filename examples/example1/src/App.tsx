@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import {
   AvailabilityCalendar,
@@ -42,6 +42,19 @@ const App: React.FC = () => {
 
   const providerTimeZone = 'America/New_York';
 
+  const overrides = useMemo(
+    () => ({
+      ...defaultComponents,
+      // ToolBar: { Root: (p: any) => <div>{JSON.stringify(p)}</div> },
+      DayCell: {
+        style: (p: any) => (p.isSelected ? { height: 60, width: 60 } : {}),
+        // className: (p: any) =>
+        //   p.isSelected ? 'rounded border-info' : 'circle border-secondary',
+      },
+    }),
+    []
+  );
+
   return (
     <div style={{ width: 350 }}>
       <AvailabilityCalendar
@@ -52,13 +65,7 @@ const App: React.FC = () => {
         onAvailabilitySelected={onAvailabilitySelected}
         onCalRangeChange={onChangedCalRange}
         blockOutPeriods={blockOutPeriods}
-        overrides={{
-          ...defaultComponents,
-          // ToolBar: { Root: (p: any) => <div>{JSON.stringify(p)}</div> },
-          DayCell: {
-            style: p => (p.isSelected ? { height: 60, width: 60 } : {}),
-          },
-        }}
+        // overrides={overrides}
       />
     </div>
   );

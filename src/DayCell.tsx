@@ -19,9 +19,17 @@ export const DayCell = ({
   const isSelected = !!selectedDate && utils.datesEqual(date, selectedDate);
   const hasAvail = availsByIndex[dayIndexInCalRange].hasAvail;
 
-  const { Root, style } = getDayCellOverride(
+  const { Root, style, className } = getDayCellOverride(
     overrides,
     {
+      className:
+        theme.dayClassBase +
+        ' ' +
+        (selectedDate && utils.datesEqual(date, selectedDate)
+          ? theme.dayClassSelected
+          : availsByIndex[dayIndexInCalRange].hasAvail
+          ? theme.dayClassHasAvailability
+          : theme.dayClassDefault),
       style: {
         cursor: 'pointer',
         border:
@@ -60,15 +68,7 @@ export const DayCell = ({
 
   return (
     <div
-      className={
-        theme.dayClassBase +
-        ' ' +
-        (selectedDate && utils.datesEqual(date, selectedDate)
-          ? theme.dayClassSelected
-          : availsByIndex[dayIndexInCalRange].hasAvail
-          ? theme.dayClassHasAvailability
-          : theme.dayClassDefault)
-      }
+      className={className}
       style={style}
       onClick={() => handleSelected(date)}
     >
