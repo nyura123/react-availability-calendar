@@ -47,9 +47,14 @@ const App: React.FC = () => {
       ...defaultComponents,
       // ToolBar: { Root: (p: any) => <div>{JSON.stringify(p)}</div> },
       DayCell: {
-        style: (p: any) => (p.isSelected ? { height: 60, width: 60 } : {}),
-        // className: (p: any) =>
-        //   p.isSelected ? 'rounded border-info' : 'circle border-secondary',
+        style: (p: any) =>
+          p.isSelected
+            ? { transition: 'width 200ms, height 200ms', height: 60, width: 60 }
+            : { transition: 'width 200ms, height 200ms' },
+        className: (p: any) =>
+          p.isSelected
+            ? 'rounded-circle border-success'
+            : 'rounded-circle border-secondary',
       },
     }),
     []
@@ -65,7 +70,7 @@ const App: React.FC = () => {
         onAvailabilitySelected={onAvailabilitySelected}
         onCalRangeChange={onChangedCalRange}
         blockOutPeriods={blockOutPeriods}
-        // overrides={overrides}
+        overrides={overrides}
       />
     </div>
   );
