@@ -21,6 +21,11 @@ const DefaultToolBarButton: OverridableComponentProps<
 > = {};
 
 const DefaultWeekdays: OverridableComponentProps<{}, {}, {}> = {};
+const DefaultWeekday: OverridableComponentProps<
+  { weekday: string },
+  {},
+  {}
+> = {};
 
 const DefaultDayCells: OverridableComponentProps<DayCellsProps, {}, {}> = {};
 
@@ -58,6 +63,7 @@ export const defaultComponents = {
   ToolBar: DefaultToolBar,
   ToolBarButton: DefaultToolBarButton,
   Weekdays: DefaultWeekdays,
+  Weekday: DefaultWeekday,
   DayCells: DefaultDayCells,
   DayCell: DefaultDayCell,
   Availabilities: DefaultAvailabiliies,
@@ -160,11 +166,19 @@ export function getToolBarButtonOverride(
   return getOverride(o, defaultSpec, {});
 }
 
-export function getWeekdaysOVerride(
+export function getWeekdaysOverride(
   overrides: Overrides | undefined,
   defaultSpec: typeof DefaultWeekdays
 ): ResolvedOverride<{}, {}> {
   const o = overrides ? overrides.Weekdays : undefined;
+  return getOverride(o, defaultSpec, {});
+}
+
+export function getWeekdayOverride(
+  overrides: Overrides | undefined,
+  defaultSpec: typeof DefaultWeekday
+): ResolvedOverride<{ weekday: string }, {}> {
+  const o = overrides ? overrides.Weekday : undefined;
   return getOverride(o, defaultSpec, {});
 }
 
