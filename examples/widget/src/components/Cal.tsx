@@ -7,7 +7,6 @@ import React, {
 } from 'react';
 
 import { useAsyncHandler } from '../hooks';
-import { Booking } from '../models';
 
 import { SimpleLoadingOVerlay } from './LoadingOverlay';
 import {
@@ -53,15 +52,12 @@ export const blockOutPeriods: MsSinceMidnightRange[] = [
 export const Cal = () => {
   // const classes = useStyles();
   const [now] = useState<Date>(new Date());
-  const [bookings, setBookings] = useState<{
-    bookings: Booking[];
-    providerTimeZone: string;
-  }>({ bookings: [], providerTimeZone: 'America/Chicago' });
+  const [avails, setAvails] = useState<AvailabilityEvent[]>([]);
   const [bookingsVersion, setBookingsVersion] = useState<number>(1);
 
   const fetchBookings = useCallback(async (api, calRange) => {
     const res = await (api as Api).getBookings(toStartAndEnd(calRange));
-    setBookings(res);
+    setAvails(res.avails);
   }, []);
 
   const {
@@ -118,12 +114,15 @@ export const Cal = () => {
     []
   );
 
+  const empty = useRef([]);
+
   return (
     <div>
       <div>
         <AvailabilityCalendar
-          bookings={bookings.bookings}
-          providerTimeZone={bookings.providerTimeZone}
+          bookings={empty.current}
+          providerTimeZone={''}
+          avails={avails}
           moment={moment}
           initialDate={now}
           onAvailabilitySelected={onAvailabilitySelected}

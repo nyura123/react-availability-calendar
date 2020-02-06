@@ -24,6 +24,7 @@ const AvailabilityCalendarComp = ({
   blockOutPeriods,
   providerTimeZone,
   bookings,
+  avails,
   onCalRangeChange,
   slotLengthMs,
   slotStepMs,
@@ -47,6 +48,8 @@ const AvailabilityCalendarComp = ({
   }, [calRange, onCalRangeChange]);
 
   const availabilities = useMemo<{ startDate: Date; endDate: Date }[]>(() => {
+    if (avails) return avails;
+
     const startAndEnd = utils.toStartAndEnd(calRange);
     return utils.availabilitiesFromBookings(
       blockOutPeriods || [],
@@ -56,7 +59,15 @@ const AvailabilityCalendarComp = ({
       startAndEnd.startDate,
       startAndEnd.endDate
     );
-  }, [bookings, providerTimeZone, calRange, now, blockOutPeriods, utils]);
+  }, [
+    avails,
+    bookings,
+    providerTimeZone,
+    calRange,
+    now,
+    blockOutPeriods,
+    utils,
+  ]);
 
   const handleOnNavigate = (navigate: NavigateAction) => {
     if (navigate === 'TODAY') {

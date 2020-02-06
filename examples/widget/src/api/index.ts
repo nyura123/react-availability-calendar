@@ -1,5 +1,6 @@
 import moment from 'moment';
-import { Booking, RequestBookingParams } from '../models';
+import { RequestBookingParams } from '../models';
+import { AvailabilityEvent } from 'react-availability-calendar';
 
 export async function throwResponseErrorIfAny(
   res: Response,
@@ -69,6 +70,10 @@ interface FreeBusyResponse {
   };
 }
 
+interface AvailsResponse {
+  avails: { startDate: string; endDate: string }[];
+}
+
 export class Api {
   db: any = null;
 
@@ -78,36 +83,16 @@ export class Api {
   }: {
     startDate: Date;
     endDate: Date;
-  }): Promise<{ providerTimeZone: string; bookings: Booking[] }> => {
+  }): Promise<{ avails: AvailabilityEvent[] }> => {
     try {
-      const booked = await ((myFetch(
-        '/freeBusy/' + startDate.getTime() + '/' + endDate.getTime()
-      ) as any) as Promise<FreeBusyResponse>);
-      let bookings: Booking[] = [];
-      for (const calId of Object.keys(booked.freeBusy.calendars)) {
-        const cal = booked.freeBusy.calendars[calId];
-        if (cal.errors) {
-          throw apiErrorStr(
-            new Error(
-              'Error getting freeBusy from ' +
-                calId +
-                ': ' +
-                JSON.stringify(cal.errors)
-            )
-          );
-        }
-        bookings = bookings.concat(
-          cal.busy.map((item: StartEnd) => ({
-            id: 'n/a',
-            resourceId: 1,
-            startDate: moment(item.start).toDate(),
-            endDate: moment(item.end).toDate(),
-          }))
-        );
-      }
+      const data = await ((myFetch(
+        '/avails/' + startDate.getTime() + '/' + endDate.getTime()
+      ) as any) as Promise<AvailsResponse>);
       return {
-        providerTimeZone: booked.providerTimeZone || 'America/New_York',
-        bookings,
+        avails: data.avails.map(a => ({
+          startDate: new Date(a.startDate),
+          endDate: new Date(a.endDate),
+        })),
       };
     } catch (e) {
       throw apiErrorStr(e);

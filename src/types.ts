@@ -105,6 +105,7 @@ export interface AvailabilityCalendarProps {
   onCalRangeChange?: (range: Range) => any;
   providerTimeZone: string;
   bookings: Booking[];
+  avails?: AvailabilityEvent[];
   initialDate: Date | null;
   onAvailabilitySelected: (e: AvailabilityEvent) => any;
   blockOutPeriods?: MsSinceMidnightRange[];

@@ -5,7 +5,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { EnterInfoProvider } from './enter-info-provider';
 
-const el = document.getElementById('react-availability-calendar-widget');
+const el = document.getElementById('root');
 const appId =
   el?.getAttribute('data-react-availability-calendar-id') ||
   'unknown_react-availability-calendar_id';
