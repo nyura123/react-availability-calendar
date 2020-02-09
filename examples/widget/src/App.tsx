@@ -4,12 +4,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './custom.scss';
 import { Cal } from './components/Cal';
 
-const App: React.FC<{ widgetId?: string }> = ({ widgetId }) => {
-  console.log('initialized with widgetId=', widgetId);
+const App: React.FC<{ calId: string }> = ({ calId }) => {
+  console.log('initialized with calId=', calId);
 
   return (
     <div style={{ width: 350 }}>
-      <Cal />
+      <Cal calId={calId} />
     </div>
   );
 };

@@ -22,6 +22,7 @@ export const services = [
   { id: 'mani_padi', label: 'Mani/Pedi' },
 ];
 export interface RequestBookingParams {
+  calId: string;
   startDate: Date;
   endDate: Date;
   email?: string;

@@ -5,14 +5,14 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { EnterInfoProvider } from './enter-info-provider';
 
-const el = document.getElementById('root');
-const appId =
+const el = document.getElementById('react-availability-calendar-widget');
+const calId =
   el?.getAttribute('data-react-availability-calendar-id') ||
   'unknown_react-availability-calendar_id';
 
 ReactDOM.render(
   <EnterInfoProvider>
-    <App widgetId={appId} />
+    <App calId={calId} />
   </EnterInfoProvider>,
   el
 );

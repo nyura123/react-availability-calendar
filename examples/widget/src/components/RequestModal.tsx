@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 
 // import { useGapi } from "../gapi/GapiProvider";
 import { useAsyncHandler } from '../hooks';
-import { Services } from './Services';
+// import { Services } from './Services';
 import { services } from '../models';
 import { LoginModal } from './EnterInfoModal';
 import { useEnterInfo } from '../enter-info-provider';
@@ -29,11 +29,13 @@ function selectedServicesIdsToEventDescription(selected: {
 }
 
 export const RequestModal = ({
+  calId,
   show,
   handleClose,
   availability,
   onRequested,
 }: {
+  calId: string;
   show: boolean;
   handleClose: () => any;
   availability: AvailabilityEvent | null;
@@ -74,6 +76,7 @@ export const RequestModal = ({
         const startDate = availability.startDate;
         const endDate = availability.endDate;
         await api.requestBooking({
+          calId,
           startDate,
           endDate,
           email /*default email - let api use it if not logged in*/,
@@ -88,6 +91,7 @@ export const RequestModal = ({
       },
     });
   }, [
+    calId,
     email,
     message,
     phone,
@@ -155,10 +159,10 @@ export const RequestModal = ({
       </Modal.Header>
       <Modal.Body>
         <h3>{formatAsDateWithTime(availability.startDate)}</h3>
-        <Services
+        {/* <Services
           selected={selectedServiceIds}
           onSelected={onSelectedServiceId}
-        />
+        /> */}
         <textarea
           onChange={e => setMessage(e.target.value)}
           style={{ width: '100%' }}

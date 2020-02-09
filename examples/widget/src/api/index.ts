@@ -38,10 +38,7 @@ export function apiErrorStr(e: ApiError | Error) {
     : JSON.stringify(e);
 }
 
-// const apiUrl = "http://localhost:3002/api";
-//const apiUrl = "https://plenary-shard-263303.firebaseapp.com";
-// const apiUrl = "https://bookenstein.herokuapp.com/api";
-const apiUrl = 'https://bookenstein-spadila.herokuapp.com/api';
+const apiUrl = 'https://bookenstein.herokuapp.com/api';
 
 export async function myFetch(url: string, init?: any): Promise<Response> {
   const options = {
@@ -78,15 +75,17 @@ export class Api {
   db: any = null;
 
   getBookings = async ({
+    calId,
     startDate,
     endDate,
   }: {
+    calId: string;
     startDate: Date;
     endDate: Date;
   }): Promise<{ avails: AvailabilityEvent[] }> => {
     try {
       const data = await ((myFetch(
-        '/avails/' + startDate.getTime() + '/' + endDate.getTime()
+        '/avails/' + calId + '/' + startDate.getTime() + '/' + endDate.getTime()
       ) as any) as Promise<AvailsResponse>);
       return {
         avails: data.avails.map(a => ({
@@ -100,6 +99,7 @@ export class Api {
   };
 
   requestBooking = async ({
+    calId,
     startDate,
     endDate,
     email,
@@ -111,7 +111,7 @@ export class Api {
     email = email || '';
 
     try {
-      await myFetch('/requestBooking', {
+      await myFetch('/requestBooking/' + calId, {
         method: 'POST',
         headers: {
           'content-type': 'application/json',

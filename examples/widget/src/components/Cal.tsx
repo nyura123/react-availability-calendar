@@ -49,14 +49,17 @@ export const blockOutPeriods: MsSinceMidnightRange[] = [
   [19 * msInHour, 24 * msInHour],
 ];
 
-export const Cal = () => {
+export const Cal = ({ calId }: { calId: string }) => {
   // const classes = useStyles();
   const [now] = useState<Date>(new Date());
   const [avails, setAvails] = useState<AvailabilityEvent[]>([]);
   const [bookingsVersion, setBookingsVersion] = useState<number>(1);
 
   const fetchBookings = useCallback(async (api, calRange) => {
-    const res = await (api as Api).getBookings(toStartAndEnd(calRange));
+    const res = await (api as Api).getBookings({
+      calId,
+      ...toStartAndEnd(calRange),
+    });
     setAvails(res.avails);
   }, []);
 
@@ -133,6 +136,7 @@ export const Cal = () => {
         {fetchBookingsInProgress && <SimpleLoadingOVerlay />}
       </div>
       <RequestModal
+        calId={calId}
         show={!!showRequestFromAvailability}
         handleClose={closeRequestModal}
         availability={showRequestFromAvailability}
