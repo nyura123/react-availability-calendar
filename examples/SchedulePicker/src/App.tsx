@@ -7,15 +7,15 @@ import {
   defaultTheme,
   Booking,
   Range,
+  Overrides,
   defaultComponents,
+  AvailSlot,
   CalendarTheme,
-} from './rac';
+} from 'react-availability-calendar';
 import moment from 'moment';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './custom.scss';
-import { Overrides } from './rac/overrides';
-import { AvailSlot } from './rac/AvailSlot';
 
 const msInHour = 60 * 60 * 1000;
 
