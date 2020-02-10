@@ -135,6 +135,17 @@ export function createUtils(moment: MomentCtrFunc) {
     );
   }
 
+  function sameMonth(d1: Date, d2: Date) {
+    return datesEqual(
+      moment(d1)
+        .startOf('month')
+        .toDate(),
+      moment(d2)
+        .startOf('month')
+        .toDate()
+    );
+  }
+
   function datesEqual(d1: Date, d2: Date) {
     return (
       d1 &&
@@ -341,6 +352,7 @@ export function createUtils(moment: MomentCtrFunc) {
     msInHour,
     datesEqual,
     formatAsMonth,
+    sameMonth,
     formatAsDateWithTime,
     formatAsDateJustTime,
     formatAsDate,

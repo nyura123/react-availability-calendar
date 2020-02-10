@@ -5,6 +5,7 @@ import { Overrides, getDayCellsOverride } from './overrides';
 
 export function DayCells({
   week,
+  date,
   selectedDate,
   weekIndexInCalRange,
   handleSelected,
@@ -27,6 +28,7 @@ export function DayCells({
     return (
       <Root
         {...{
+          date,
           week,
           selectedDate,
           weekIndexInCalRange,
@@ -46,6 +48,7 @@ export function DayCells({
         <DayCell
           key={'d_' + j}
           {...{
+            shouldDisplay: utils.sameMonth(d, date),
             date: d,
             selectedDate,
             weekIndexInCalRange,

@@ -9,9 +9,14 @@ export function AvailSlot({
   formatAsDateJustTime,
   overrides,
 }: AvailSlotProps & { overrides?: Overrides }) {
-  const { Root, style } = getAvailOverride(overrides, {
-    style: { marginBottom: 10 },
-  });
+  const { Root, className, style } = getAvailOverride(
+    overrides,
+    {
+      className: theme.slotButtonClass,
+      style: { minWidth: 200 },
+    },
+    { date: s.startDate }
+  );
 
   if (Root) {
     return (
@@ -27,12 +32,12 @@ export function AvailSlot({
   }
 
   return (
-    <div style={style}>
+    <div style={{ marginBottom: 10 }}>
       <button
-        className={theme.slotButtonClass}
+        className={className}
         disabled={false}
         // variant="contained"
-        style={{ minWidth: 200 }}
+        style={style}
         onClick={() =>
           onAvailabilitySelected({
             startDate: new Date(s.startDate),

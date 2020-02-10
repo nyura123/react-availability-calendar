@@ -124,6 +124,7 @@ export interface MonthlyAvailabilityCalendarProps {
 
 export interface DayCellProps {
   selectedDate: Date | null;
+  shouldDisplay: boolean;
   date: Date;
   dayIndexInWeek: number;
   weekIndexInCalRange: number;
@@ -136,6 +137,7 @@ export interface DayCellProps {
 
 export interface DayCellsProps {
   week: Date[];
+  date: Date;
   selectedDate: Date | null;
   weekIndexInCalRange: number;
   handleSelected: (date: Date) => void;

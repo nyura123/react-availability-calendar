@@ -32,7 +32,7 @@ const DefaultDayCells: OverridableComponentProps<DayCellsProps, {}, {}> = {};
 const DefaultDayCell: OverridableComponentProps<
   DayCellProps,
   {},
-  { isSelected: boolean; hasAvail: boolean }
+  { date: Date; isSelected: boolean; hasAvail: boolean }
 > = {};
 
 const DefaultAvailabiliies: OverridableComponentProps<
@@ -41,7 +41,11 @@ const DefaultAvailabiliies: OverridableComponentProps<
   {}
 > = {};
 
-const DefaultAvailSlot: OverridableComponentProps<AvailSlotProps, {}, {}> = {};
+const DefaultAvailSlot: OverridableComponentProps<
+  AvailSlotProps,
+  {},
+  { date: Date }
+> = {};
 
 // type ExtractComponentProps<
 //   Overridable
@@ -209,8 +213,9 @@ export function getAvailsOverride(
 
 export function getAvailOverride(
   overrides: Overrides | undefined,
-  defaultSpec: typeof DefaultAvailSlot
+  defaultSpec: typeof DefaultAvailSlot,
+  styleProps?: ExtractStyleProps<typeof DefaultAvailSlot>
 ): ResolvedOverride<AvailSlotProps, {}> {
   const o = overrides ? overrides.AvailSlot : undefined;
-  return getOverride(o, defaultSpec, {});
+  return getOverride(o, defaultSpec, styleProps);
 }

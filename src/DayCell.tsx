@@ -4,6 +4,7 @@ import { Overrides, getDayCellOverride } from './overrides';
 
 export const DayCell = ({
   date,
+  shouldDisplay,
   dayIndexInWeek,
   weekIndexInCalRange,
   availsByIndex,
@@ -45,13 +46,14 @@ export const DayCell = ({
         alignItems: 'center',
       },
     },
-    { isSelected, hasAvail }
+    { date, isSelected, hasAvail }
   );
 
   if (Root) {
     return (
       <Root
         {...{
+          shouldDisplay,
           date,
           dayIndexInWeek,
           weekIndexInCalRange,
@@ -66,10 +68,14 @@ export const DayCell = ({
     );
   }
 
+  const styleWithHiden = shouldDisplay
+    ? style
+    : { ...style, visibility: 'hidden' as 'hidden' };
+
   return (
     <div
       className={className}
-      style={style}
+      style={styleWithHiden}
       onClick={() => handleSelected(date)}
     >
       {moment(date).format('D')}

@@ -73,6 +73,7 @@ export const MonthlyAvailabilityCalendar = ({
           <React.Fragment key={'w_' + i}>
             <DayCells
               {...{
+                date,
                 week: w,
                 selectedDate,
                 weekIndexInCalRange: i,
