@@ -5,10 +5,8 @@ import './custom.scss';
 import { Cal } from './components/Cal';
 
 const App: React.FC<{ calId: string }> = ({ calId }) => {
-  console.log('initialized with calId=', calId);
-
   return (
-    <div style={{ width: 350 }}>
+    <div>
       <Cal calId={calId} />
     </div>
   );
