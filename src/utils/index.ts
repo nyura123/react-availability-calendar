@@ -45,8 +45,6 @@ export function createUtils(moment: MomentCtrFunc) {
 
   const msInDay = 24 * 60 * 60 * 1000;
   const msInHour = 1 * 60 * 60 * 1000;
-  const msInMinute = 1 * 60 * 1000;
-  const minuteInHour = 60;
 
   function rotateMs(ms: number, msOffset: number) {
     msOffset =
@@ -81,17 +79,23 @@ export function createUtils(moment: MomentCtrFunc) {
     return filtered;
   }
 
-  function calcOffsetFromProviderTimeZoneMs(providerTimeZone: string) {
+  function calcOffsetFromProviderTimeZoneMs(
+    localMs: number,
+    providerTimeZone: string
+  ) {
     if (!providerTimeZone) return 0;
 
-    const now = new Date();
-    var tzNow = new Date(
-      now.toLocaleString('en-US', {
+    const localDate = new Date(localMs);
+
+    var localDateInProviderTz = new Date(
+      localDate.toLocaleString('en-US', {
         timeZone: providerTimeZone,
       })
     );
     const offsetRoundedToNearestHour =
-      Math.floor((tzNow.getTime() - now.getTime()) / msInHour + 0.5) * msInHour;
+      Math.floor(
+        (localDateInProviderTz.getTime() - localDate.getTime()) / msInHour + 0.5
+      ) * msInHour;
 
     return offsetRoundedToNearestHour;
   }
@@ -99,7 +103,7 @@ export function createUtils(moment: MomentCtrFunc) {
   const ms_in_hour = 60 * 60 * 1000;
 
   function roundToHour(ms: number) {
-    return Math.floor(ms / ms_in_hour) * ms_in_hour;
+    return Math.floor(ms / msInHour) * msInHour;
   }
 
   function formatAsDate(date: Date) {
@@ -195,64 +199,32 @@ export function createUtils(moment: MomentCtrFunc) {
 
   function addBlockOutBookings(
     blockOutPeriods: MsSinceMidnightRange[],
-    provideTimeZone: string,
+    providerTimeZone: string,
     bookings: Booking[],
-    periodStart: Date,
-    periodEnd: Date
+    localStart: Date, //client local start midnight
+    localEnd: Date //client local end midnight
   ) {
-    const tzOffsetMs = calcOffsetFromProviderTimeZoneMs(provideTimeZone);
-    const blockOutPeriodsTz = rotateRangesByms(blockOutPeriods, tzOffsetMs);
     const res = [...bookings];
-    const periodStartRoundedToDayMs = new Date(
-      periodStart.getFullYear(),
-      periodStart.getMonth(),
-      periodStart.getDate()
-    ).getTime();
-    const periodEndRoundedToDayMs = new Date(
-      periodEnd.getFullYear(),
-      periodEnd.getMonth(),
-      periodEnd.getDate()
-    ).getTime();
+    const periodStartRoundedToDayMs = localStart.getTime();
+    const periodEndRoundedToDayMs = localEnd.getTime();
     for (
       let i = periodStartRoundedToDayMs;
       i <= periodEndRoundedToDayMs;
       i = i + msInDay
     ) {
-      const day = new Date(i);
+      const tzOffsetMs = calcOffsetFromProviderTimeZoneMs(i, providerTimeZone);
+      const blockOutPeriodsTz = rotateRangesByms(blockOutPeriods, tzOffsetMs);
       for (const period of blockOutPeriodsTz) {
-        const hourStart = Math.floor(period[0] / msInHour);
-        const hourEnd = Math.floor(period[1] / msInHour);
-        const minuteStart = Math.floor(period[0] / msInMinute) % minuteInHour;
-        const minuteEnd = Math.floor(period[1] / msInMinute) % minuteInHour;
-
         res.push({
-          startDate: new Date(
-            day.getFullYear(),
-            day.getMonth(),
-            day.getDate(),
-            hourStart,
-            minuteStart
-          ),
-          endDate: new Date(
-            day.getFullYear(),
-            day.getMonth(),
-            day.getDate(),
-            hourEnd,
-            minuteEnd
-          ),
+          startDate: new Date(i + period[0]),
+          endDate: new Date(i + period[1]),
         });
       }
 
-      // Ensure each availability is broken up at EOD and doesn't span days
+      // Ensure each availability is broken up at local EOD and doesn't span days
       res.push({
-        startDate: new Date(
-          day.getFullYear(),
-          day.getMonth(),
-          day.getDate(),
-          23,
-          59
-        ),
-        endDate: new Date(day.getFullYear(), day.getMonth(), day.getDate(), 24),
+        startDate: new Date(i + msInDay - 1),
+        endDate: new Date(i + msInDay),
       });
     }
     return res;
