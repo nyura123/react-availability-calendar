@@ -11,6 +11,7 @@ import { Overrides } from './overrides';
 export const MonthlyAvailabilityCalendar = ({
   availabilities,
   onAvailabilitySelected,
+  onDaySelected,
   slotLengthMs,
   slotStepMs,
   date,
@@ -23,17 +24,21 @@ export const MonthlyAvailabilityCalendar = ({
 
   useEffect(() => {
     setSelectedDate(null);
+    onDaySelected && onDaySelected(null);
   }, [date]);
 
   const handleSelected = (date: Date) => {
     if (selectedDate && utils.datesEqual(date, selectedDate)) {
       setSelectedDate(null);
+      onDaySelected && onDaySelected(null);
     } else {
       setSelectedDate(date);
+      onDaySelected && onDaySelected(date);
     }
   };
 
   const handleUnselect = () => {
+    onDaySelected && onDaySelected(null);
     setSelectedDate(null);
   };
 

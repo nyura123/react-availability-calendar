@@ -232,7 +232,7 @@ export function createUtils(moment: MomentCtrFunc) {
 
       // Ensure each availability is broken up at local EOD and doesn't span days
       res.push({
-        startDate: new Date(i),
+        startDate: new Date(i + msInDay - 1),
         endDate: new Date(i + msInDay),
       });
     }

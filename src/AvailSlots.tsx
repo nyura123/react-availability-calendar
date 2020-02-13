@@ -66,6 +66,17 @@ export const AvailSlots: React.SFC<AvailSlotsProps & {
             utils={utils}
             overrides={overrides}
           />
+          {viewingDayAvailabilities.length > 7 && (
+            <button
+              type="button"
+              className={theme.slotContainerCloseClass}
+              aria-label="Close"
+              style={{ outline: 'none' }}
+              onClick={handleUnselect}
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          )}
         </div>
       )}
     </div>

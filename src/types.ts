@@ -59,7 +59,7 @@ export const defaultTheme: CalendarTheme = {
 
   toolBarStyle: {
     flexWrap: 'nowrap',
-    width: 350,
+    width: '100%',
     minHeight: 50,
   },
   toolBarButtonsContainerClass: 'border btn-group w-100',
@@ -108,6 +108,7 @@ export interface AvailabilityCalendarProps {
   avails?: AvailabilityEvent[];
   initialDate: Date | null;
   onAvailabilitySelected: (e: AvailabilityEvent) => any;
+  onDaySelected: (d: Date | null) => any;
   blockOutPeriods?: MsSinceMidnightRange[];
   slotLengthMs?: number;
   slotStepMs?: number;
@@ -117,6 +118,7 @@ export interface MonthlyAvailabilityCalendarProps {
   availabilities: AvailabilityEvent[];
   date: Date;
   style?: CSSProperties;
+  onDaySelected: (d: Date | null) => any;
   onAvailabilitySelected: (e: AvailabilityEvent) => any;
   slotLengthMs?: number;
   slotStepMs?: number;

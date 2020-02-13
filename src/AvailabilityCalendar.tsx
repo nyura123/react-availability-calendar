@@ -21,6 +21,7 @@ import { Overrides } from './overrides';
 const AvailabilityCalendarComp = ({
   initialDate,
   onAvailabilitySelected,
+  onDaySelected,
   blockOutPeriods,
   providerTimeZone,
   bookings,
@@ -55,7 +56,7 @@ const AvailabilityCalendarComp = ({
       blockOutPeriods || [],
       providerTimeZone,
       bookings,
-      now,
+      new Date() /*now*/,
       startAndEnd.startDate,
       startAndEnd.endDate
     );
@@ -105,6 +106,7 @@ const AvailabilityCalendarComp = ({
         availabilities={availabilities}
         date={date}
         onAvailabilitySelected={onAvailabilitySelected}
+        onDaySelected={onDaySelected}
         slotLengthMs={slotLengthMs}
         slotStepMs={slotStepMs}
         overrides={overrides}
