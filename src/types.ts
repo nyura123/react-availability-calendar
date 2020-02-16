@@ -108,7 +108,7 @@ export interface AvailabilityCalendarProps {
   avails?: AvailabilityEvent[];
   initialDate: Date | null;
   onAvailabilitySelected: (e: AvailabilityEvent) => any;
-  onDaySelected: (d: Date | null) => any;
+  onDaySelected?: (d: Date | null) => any;
   blockOutPeriods?: MsSinceMidnightRange[];
   slotLengthMs?: number;
   slotStepMs?: number;
@@ -118,7 +118,7 @@ export interface MonthlyAvailabilityCalendarProps {
   availabilities: AvailabilityEvent[];
   date: Date;
   style?: CSSProperties;
-  onDaySelected: (d: Date | null) => any;
+  onDaySelected?: (d: Date | null) => any;
   onAvailabilitySelected: (e: AvailabilityEvent) => any;
   slotLengthMs?: number;
   slotStepMs?: number;

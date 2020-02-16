@@ -28,7 +28,7 @@ export const Weekdays = ({ overrides }: { overrides?: Overrides }) => {
   } = getWeekdayOverride(overrides, {
     className: 'border border-default',
     style: {
-      flex: 50,
+      width: 50,
       height: 50,
       marginBottom: 10,
       display: 'flex',
