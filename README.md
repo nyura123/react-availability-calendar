@@ -10,6 +10,8 @@ No `moment` dependency required, but accepts a `moment`-like prop that needs to 
 
 ## Props:
 
+Provide bookings, from which avails will be derived, or `avails` directly
+
 ```js
 export interface AvailabilityCalendarProps {
   moment: MomentCtrFunc;
@@ -17,8 +19,10 @@ export interface AvailabilityCalendarProps {
   onCalRangeChange?: (range: Range) => any;
   providerTimeZone: string;
   bookings: Booking[];
+  avails?: AvailabilityEvent[];
   initialDate: Date | null;
   onAvailabilitySelected: (e: AvailabilityEvent) => any;
+  onDaySelected?: (d: Date | null) => any;
   blockOutPeriods?: MsSinceMidnightRange[];
   slotLengthMs?: number;
   slotStepMs?: number;
@@ -102,6 +106,56 @@ const App: React.FC = () => {
 export default App;
 ```
 
+## Customizability via overrides
+
+````js
+const overrides =
+{
+      ...defaultComponents,
+      // ToolBar: { Root: (p: any) => <div>{JSON.stringify(p)}</div> },
+      ToolBar: {
+        className: "border btn-group",
+        style: { minHeight: undefined }
+      },
+      ToolBarButton: {
+        className: "btn btn-outline-info",
+        style: { outline: "none" }
+      },
+      Weekday: {
+        style: {
+          borderWidth: 0,
+          borderStyle: "solid",
+          borderBottomWidth: 1,
+          borderRightWidth: 1,
+          borderColor: "#dddddd"
+        },
+        className: "none"
+      },
+      AvailSlot: {
+        className: p =>
+          myAvailSlotLogic(p.date)
+            ? "btn btn-success"
+            : "btn btn-outline-primary"
+      },
+      DayCell: {
+        style: p =>
+          p.isSelected
+            ? { transition: "width 200ms, height 200ms", height: 60, width: 60 }
+            : { transition: "width 200ms, height 200ms" },
+        className: p =>
+          myDayLogic(p.date)
+            ? "rounded-circle border-success"
+            : p.isSelected || p.hasAvail
+            ? "rounded-circle border-primary"
+            : "rounded-circle border-default"
+      }
+    };
+
+// ...
+      <AvailabilityCalendar overrides={overrides} {...restOfProps} />
+// ...
+    ```
+
 ### Examples
 
 - [Example](https://github.com/nyura123/react-availability-calendar/tree/master/examples/example1)
@@ -115,3 +169,4 @@ export default App;
 `npm start`
 
 ## Bootstrapped with [TSDX](https://github.com/palmerhq/tsdx)
+````
