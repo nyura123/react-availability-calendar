@@ -8,6 +8,10 @@ A customizable React component for displaying booking availabilities on a calend
 
 No `moment` dependency required, but accepts a `moment`-like prop that needs to implement a subset of `Moment`'s API.
 
+## DatePoll app built on top of this component
+
+[DatePoll](https://datepoll.web.app/)
+
 ## Example installation
 
 `yarn add react-availability-calendar moment bootstrap` (or `npm install`)
