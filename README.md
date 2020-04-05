@@ -47,7 +47,7 @@ pass `theme={{requestAppointmentLabel: "Request Booking or other wording"}}`
 
 - [Live demo](https://nyura123.github.io/react-availability-calendar/)
 
-### More complex example:
+### non-typescript example:
 
 - [Example repo](https://github.com/nyura123/react-availability-calendar-example-js/)
 

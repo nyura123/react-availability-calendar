@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 
 import {
   AvailabilityCalendar,
@@ -16,20 +16,46 @@ import { Overrides } from 'react-availability-calendar/dist/overrides';
 
 const msInHour = 60 * 60 * 1000;
 
+// aka DayMode - which part of the day to display time slots for
+type CalMode = 'allDay' | 'morning' | 'evening' | 'noon';
+
 const App: React.FC = () => {
   const now = new Date();
 
-  const onAvailabilitySelected = (a: AvailabilityEvent) =>
-    console.log('Availability slot selected: ', a);
+  const [selectedAvails, setSelectedAvails] = useState<{
+    [key: number]: AvailabilityEvent | null;
+  }>({});
+
+  // for optional custom toolbar
+  const [showCustomToolBar, setShowCustomToolBar] = useState(false);
+  const [timeOfDayMode, setTimeOfDayMode] = useState<CalMode>('evening');
+
+  const onAvailabilitySelected = (a: AvailabilityEvent) => {
+    console.log('Availability slot selected!: ', a);
+    const startMs = a.startDate.getTime();
+    const wasSelected = !!selectedAvails[startMs];
+    setSelectedAvails((selectedAvails) => ({
+      ...selectedAvails,
+      [startMs]: wasSelected ? null : a,
+    }));
+  };
+  // for optional custom toolbar
+  const onDaySelected = (day: Date | null) => {
+    setShowCustomToolBar(!!day);
+  };
+  const handleCloseToolBar = () => {
+    setShowCustomToolBar(false);
+  };
 
   const onChangedCalRange = (r: Range) =>
     console.log('Calendar range selected (fetch bookings here): ', r);
 
   const providerTimeZoneForBlockOutHours = 'America/New_York';
-  const blockOutPeriods: MsSinceMidnightRange[] = [
-    [0 * msInHour, 9 * msInHour],
-    [19 * msInHour, 24 * msInHour],
-  ];
+  // const blockOutPeriods: MsSinceMidnightRange[] = [
+  //   [0 * msInHour, 9 * msInHour],
+  //   [19 * msInHour, 24 * msInHour],
+  // ];
+  const blockOutPeriods = blockOutsForCalMode(timeOfDayMode);
 
   const bookings: Booking[] = [
     {
@@ -55,6 +81,12 @@ const App: React.FC = () => {
         className: 'btn btn-outline-info',
         style: { outline: 'none' },
       },
+      AvailSlot: {
+        className: (p) =>
+          selectedAvails[p.date.getTime()]
+            ? 'btn btn-secondary'
+            : 'btn btn-primary',
+      },
       Weekday: {
         style: {
           borderWidth: 0,
@@ -66,11 +98,11 @@ const App: React.FC = () => {
         className: 'none',
       },
       DayCell: {
-        style: p =>
+        style: (p) =>
           p.isSelected
             ? { transition: 'width 200ms, height 200ms', height: 60, width: 60 }
             : { transition: 'width 200ms, height 200ms' },
-        className: p =>
+        className: (p) =>
           p.isSelected
             ? 'rounded-circle border-success'
             : p.hasAvail
@@ -78,23 +110,151 @@ const App: React.FC = () => {
             : 'rounded-circle border-secondary',
       },
     }),
-    []
+    [selectedAvails]
   );
 
   return (
-    <div style={{ width: 350 }}>
-      <AvailabilityCalendar
-        bookings={bookings}
-        providerTimeZone={providerTimeZoneForBlockOutHours}
-        moment={moment}
-        initialDate={now}
-        onAvailabilitySelected={onAvailabilitySelected}
-        onCalRangeChange={onChangedCalRange}
-        blockOutPeriods={blockOutPeriods}
-        overrides={overrides}
-      />
+    <div
+      style={{
+        position: 'relative',
+      }}
+    >
+      <div>
+        <a href="https://github.com/nyura123/react-availability-calendar/tree/master/examples/example1">
+          Code
+        </a>
+      </div>
+      <div style={{ maxWidth: 350, maxHeight: 520, overflowY: 'auto' }}>
+        <AvailabilityCalendar
+          bookings={bookings}
+          providerTimeZone={providerTimeZoneForBlockOutHours}
+          moment={moment}
+          initialDate={now}
+          onAvailabilitySelected={onAvailabilitySelected}
+          onDaySelected={onDaySelected}
+          onCalRangeChange={onChangedCalRange}
+          blockOutPeriods={blockOutPeriods}
+          overrides={overrides}
+        />
+      </div>
+      <div
+        className="shadow"
+        style={{
+          width: '100%',
+          maxWidth: 350,
+          backgroundColor: 'rgba(200, 200, 200, 1)',
+          ...(showCustomToolBar ? styleShow : styleHide),
+          top: 0,
+          left: 0,
+        }}
+      >
+        <CalModeToolbar calMode={timeOfDayMode} setCalMode={setTimeOfDayMode} />
+        <button
+          className="btn btn-sm btn-outline-secondary"
+          onClick={handleCloseToolBar}
+        >
+          Close
+        </button>
+      </div>
     </div>
   );
 };
+
+// Optional example custom tool bar
+
+const CalModeToolbar = ({
+  calMode,
+  setCalMode,
+}: {
+  calMode: CalMode;
+  setCalMode: (c: CalMode) => any;
+}) => (
+  <div className="m-1 btn-group">
+    <CalModeButton
+      label="Morning"
+      calModeTarget="morning"
+      {...{ setCalMode, calMode }}
+    />
+    <CalModeButton
+      label="Noon"
+      calModeTarget="noon"
+      {...{ setCalMode, calMode }}
+    />
+    <CalModeButton
+      label="Evening"
+      calModeTarget="evening"
+      {...{ setCalMode, calMode }}
+    />
+    <CalModeButton
+      label="All Day"
+      calModeTarget="allDay"
+      {...{ setCalMode, calMode }}
+    />
+  </div>
+);
+
+const CalModeButton = ({
+  calMode,
+  setCalMode,
+  calModeTarget,
+  label,
+}: {
+  calMode: CalMode;
+  setCalMode: (c: CalMode) => any;
+  calModeTarget: CalMode;
+  label: string;
+}) => (
+  <button
+    onClick={() => setCalMode(calModeTarget)}
+    className={calModeBtnStyle(calMode, calModeTarget)}
+  >
+    {label}
+  </button>
+);
+
+const styleShow = {
+  position: 'absolute' as 'absolute',
+  transition: 'transform 300ms',
+  transform: 'scale(1)',
+};
+const styleHide = {
+  position: 'absolute' as 'absolute',
+  transition: 'transform 300ms',
+  transform: 'scale(0)',
+};
+
+const calModeBtnStyle = (calModeSelected: CalMode, calModeTarget: CalMode) =>
+  calModeSelected === calModeTarget
+    ? 'btn btn-sm btn-primary'
+    : 'btn btn-sm btn-default';
+
+const blockOutAllDay: MsSinceMidnightRange[] = [];
+
+const blockOutMorning: MsSinceMidnightRange[] = [
+  [0 * msInHour, 5 * msInHour],
+  [12 * msInHour, 24 * msInHour],
+];
+
+const blockOutNoon: MsSinceMidnightRange[] = [
+  [0 * msInHour, 12 * msInHour],
+  [17 * msInHour, 24 * msInHour],
+];
+
+const blockOutEvening: MsSinceMidnightRange[] = [[0 * msInHour, 17 * msInHour]];
+
+function blockOutsForCalMode(calMode: CalMode): MsSinceMidnightRange[] {
+  switch (calMode) {
+    case 'allDay':
+      return blockOutAllDay;
+    case 'morning':
+      return blockOutMorning;
+    case 'noon':
+      return blockOutNoon;
+    case 'evening':
+      return blockOutEvening;
+
+      return 'unhandled calMode' as never;
+  }
+}
 
 export default App;
