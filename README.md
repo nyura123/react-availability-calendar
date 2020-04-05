@@ -8,6 +8,12 @@ A customizable React component for displaying booking availabilities on a calend
 
 No `moment` dependency required, but accepts a `moment`-like prop that needs to implement a subset of `Moment`'s API.
 
+## Example installation
+
+`yarn add react-availability-calendar moment` (or `npm install`)
+
+## typescript definitions included
+
 ## Props:
 
 Provide bookings, from which avails will be derived, or `avails` directly
@@ -40,6 +46,10 @@ pass `theme={{requestAppointmentLabel: "Request Booking or other wording"}}`
 ### Demos:
 
 - [Live demo](https://nyura123.github.io/react-availability-calendar/)
+
+### More complex example:
+
+- [Example repo](https://nyura123.github.io/react-availability-calendar-example-js/)
 
 ### Usage:
 
