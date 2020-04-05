@@ -10,7 +10,7 @@ No `moment` dependency required, but accepts a `moment`-like prop that needs to 
 
 ## Example installation
 
-`yarn add react-availability-calendar moment` (or `npm install`)
+`yarn add react-availability-calendar moment bootstrap` (or `npm install`)
 
 ## typescript definitions included
 
