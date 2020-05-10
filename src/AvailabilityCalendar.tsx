@@ -27,6 +27,8 @@ const AvailabilityCalendarComp = ({
   bookings,
   avails,
   onCalRangeChange,
+  excludeFn,
+  excludeWeekends,
   slotLengthMs,
   slotStepMs,
   overrides,
@@ -104,6 +106,8 @@ const AvailabilityCalendarComp = ({
       />
       <MonthlyAvailabilityCalendar
         availabilities={availabilities}
+        excludeFn={excludeFn}
+        excludeWeekends={excludeWeekends}
         date={date}
         onAvailabilitySelected={onAvailabilitySelected}
         onDaySelected={onDaySelected}

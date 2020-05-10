@@ -101,6 +101,8 @@ export type Range = Date[] | { start: stringOrDate; end: stringOrDate };
 
 export interface AvailabilityCalendarProps {
   moment: MomentCtrFunc;
+  excludeWeekends?: boolean;
+  excludeFn?: (date: Date) => boolean;
   theme?: CalendarThemeProp;
   onCalRangeChange?: (range: Range) => any;
   providerTimeZone: string;
@@ -116,6 +118,8 @@ export interface AvailabilityCalendarProps {
 
 export interface MonthlyAvailabilityCalendarProps {
   availabilities: AvailabilityEvent[];
+  excludeWeekends?: boolean;
+  excludeFn?: (date: Date) => boolean;
   date: Date;
   style?: CSSProperties;
   onDaySelected?: (d: Date | null) => any;

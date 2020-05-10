@@ -122,9 +122,28 @@ export function createUtils(moment: MomentCtrFunc) {
     return moment(date).format('MMM YYYY');
   }
 
-  function availByIndex(days: Date[], avails: AvailabilityEvent[]) {
+  function isWeekend(date: Date) {
+    return [0, 6].indexOf(date.getDay()) >= 0;
+  }
+
+  function shouldIncludeDate(
+    d: Date,
+    excludeWeekends: boolean,
+    excludeFn?: (date: Date) => boolean
+  ) {
+    return (!excludeWeekends || !isWeekend(d)) && (!excludeFn || !excludeFn(d));
+  }
+
+  function availByIndex(
+    days: Date[],
+    avails: AvailabilityEvent[],
+    excludeWeekends: boolean,
+    excludeFn?: (date: Date) => boolean
+  ) {
     return (days || []).map(d => ({
-      hasAvail: avails.some(a => datesEqual(a.startDate, d)),
+      hasAvail:
+        shouldIncludeDate(d, excludeWeekends, excludeFn) &&
+        avails.some(a => datesEqual(a.startDate, d)),
     }));
   }
 
@@ -344,6 +363,7 @@ export function createUtils(moment: MomentCtrFunc) {
     toStartAndEnd,
     monthRangeForDate,
     monthDaysForDate,
+    shouldIncludeDate,
     chunkify,
   };
 }

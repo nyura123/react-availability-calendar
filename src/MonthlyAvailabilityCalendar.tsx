@@ -10,6 +10,8 @@ import { Overrides } from './overrides';
 
 export const MonthlyAvailabilityCalendar = ({
   availabilities,
+  excludeWeekends,
+  excludeFn,
   onAvailabilitySelected,
   onDaySelected,
   slotLengthMs,
@@ -48,12 +50,27 @@ export const MonthlyAvailabilityCalendar = ({
   ]);
 
   const availsByIndex = useMemo(
-    () => utils.availByIndex(days, availabilities),
+    () =>
+      utils.availByIndex(
+        days,
+        availabilities,
+        excludeWeekends || false,
+        excludeFn
+      ),
     [days, availabilities, utils]
   );
 
   const viewingDayAvailabilities = useMemo(() => {
     if (selectedDate !== null) {
+      if (
+        !utils.shouldIncludeDate(
+          selectedDate,
+          excludeWeekends || false,
+          excludeFn
+        )
+      ) {
+        return [];
+      }
       return (availabilities || []).filter(({ startDate }) =>
         utils.datesEqual(startDate, selectedDate)
       );

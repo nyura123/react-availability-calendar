@@ -34,6 +34,8 @@ export interface AvailabilityCalendarProps {
   onAvailabilitySelected: (e: AvailabilityEvent) => any;
   onDaySelected?: (d: Date | null) => any;
   blockOutPeriods?: MsSinceMidnightRange[];
+  excludeWeekends?: boolean;
+  excludeFn?: (date: Date) => boolean;
   slotLengthMs?: number;
   slotStepMs?: number;
 }
