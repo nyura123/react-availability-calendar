@@ -1,4 +1,6 @@
-# React Availability Calendar
+# [DEPRECATED] React Availability Calendar
+
+## Note: this project is no longer actively maintained.
 
 A customizable React component for displaying booking availabilities on a calendar.
 
