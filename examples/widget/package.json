@@ -40,7 +40,7 @@
     "@types/react-bootstrap": "^0.32.20",
     "@types/react-dom": "^16.9.5",
     "gh-pages": "^2.2.0",
-    "node-sass": "^4.13.1",
+    "node-sass": "^7.0.0",
     "react-scripts": "^3.3.1",
     "rewire": "^4.0.1"
   }
